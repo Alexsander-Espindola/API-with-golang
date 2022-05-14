@@ -5,7 +5,6 @@
 ## Camada model
 
     - Vai descreve a lógica de negócio da aplicação
-    -
 
 ## View
 
