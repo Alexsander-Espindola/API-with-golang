@@ -1,24 +1,10 @@
-# API-with-golang
-
-# Modelo MVVM
-
-## Camada model
-
-    - Vai descreve a lógica de negócio da aplicação
-
-## View
-
-    -  Vai representar os componentes da inteface do usuário
-    -  Vai exibir os dado vindo da Model
-
-## ViewModel
-
-    - Manter o estádo e ativar os eventos na view atravez de comando e data bindings
-    - Vai fazer a ponte com a model e vai carregar a lógica da aplicação
-    - Vinculação dos dados para a visualização definindo membros que são que controlam dados
-    - Ponto de integraçãoo com outros serviços como o banco de dados
-
 # GO
+  - Características:
+    - Expansiva, limpa e eficiente
+    - Simples: usa um paradigma procedural
+    - Confiável e Eficiente: feita para garantir que as funções sejam executadas de maneira fácil, concorrente e rápida
+    - Compilada e tipada: garante que não subirá muito dos erros de código para a produção
+    - Pode gerar builds de difentes sistemas operaconais na sua aplicação
 
 # Dockerizando o GoLang
 
@@ -68,6 +54,7 @@ go mod init [module-path]
 ```
 go mod init github.com/Alexsander-Espindola...
 ```
+
 O comando go mod init inicializa e grava um novo arquivo go.mod no diretório atual, na verdade criando um novo módulo enraizado no diretório atual.
 
 - Go mod tidy
@@ -99,3 +86,31 @@ O comando go mod graph imprime o gráfico de requisitos do módulo (com substitu
 ```
 docker run -p 8080:8080 my-server
 ```
+
+
+# gRPC
+  Fonte:
+
+  https://www.youtube.com/watch?v=F4t3ZBVMlvo&ab_channel=C%C3%B3digoFonteTV
+
+  - Caractrísticas:
+    - Código aberto
+    - Alto desempenho de chamadas ente sistemas
+    - Tem o objetivo de ser mais leve e performático do que as APIs REST tradicionais
+    - Usa versão HTTP2 para codificar o pacote de forma binária
+  
+  - Padrão RPC:
+    - Remote procedure call
+    - Suporte para:
+      1. Balanceamento de carga
+      2. Rastreamento
+      3. Verificação de integridade
+      4. Autentificação
+    - RPC Tradicional:
+      - Modelo síncrono de cliente servidor
+    - RPC assícrono
+      - Modelo assíncrono de cliente servidor
+
+  - Protobuf
+    - IDL: Linguagem de definição de interface
+    - Toda a comunicação do sistema definida no sistema do protobuf
