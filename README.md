@@ -1,10 +1,25 @@
+# Aprendizados do projeto
+
+## Ferramentas
+  - GO lang
+  - gRPC
+
+## Fontes que eu usei para o estudo
+
+    - Playlist Go lang do zero
+
+      https://www.youtube.com/watch?v=_MkQLDMak-4&list=PL5aY_NrL1rjucQqO21QH8KclsLDYu1BIg&index=1&ab_channel=FullCycle
+
+    -
+
 # GO
-  - Características:
-    - Expansiva, limpa e eficiente
-    - Simples: usa um paradigma procedural
-    - Confiável e Eficiente: feita para garantir que as funções sejam executadas de maneira fácil, concorrente e rápida
-    - Compilada e tipada: garante que não subirá muito dos erros de código para a produção
-    - Pode gerar builds de difentes sistemas operaconais na sua aplicação
+
+- Características:
+  - Expansiva, limpa e eficiente
+  - Simples: usa um paradigma procedural
+  - Confiável e Eficiente: feita para garantir que as funções sejam executadas de maneira fácil, concorrente e rápida
+  - Compilada e tipada: garante que não subirá muito dos erros de código para a produção
+  - Pode gerar builds de difentes sistemas operaconais na sua aplicação
 
 # Dockerizando o GoLang
 
@@ -87,30 +102,32 @@ O comando go mod graph imprime o gráfico de requisitos do módulo (com substitu
 docker run -p 8080:8080 my-server
 ```
 
-
 # gRPC
-  Fonte:
 
-  https://www.youtube.com/watch?v=F4t3ZBVMlvo&ab_channel=C%C3%B3digoFonteTV
+Fonte:
 
-  - Caractrísticas:
-    - Código aberto
-    - Alto desempenho de chamadas ente sistemas
-    - Tem o objetivo de ser mais leve e performático do que as APIs REST tradicionais
-    - Usa versão HTTP2 para codificar o pacote de forma binária
-  
-  - Padrão RPC:
-    - Remote procedure call
-    - Suporte para:
-      1. Balanceamento de carga
-      2. Rastreamento
-      3. Verificação de integridade
-      4. Autentificação
-    - RPC Tradicional:
-      - Modelo síncrono de cliente servidor
-    - RPC assícrono
-      - Modelo assíncrono de cliente servidor
+https://www.youtube.com/watch?v=F4t3ZBVMlvo&ab_channel=C%C3%B3digoFonteTV
 
-  - Protobuf
-    - IDL: Linguagem de definição de interface
-    - Toda a comunicação do sistema definida no sistema do protobuf
+- Caractrísticas:
+
+  - Código aberto
+  - Alto desempenho de chamadas ente sistemas
+  - Tem o objetivo de ser mais leve e performático do que as APIs REST tradicionais
+  - Usa versão HTTP2 para codificar o pacote de forma binária
+
+- Padrão RPC:
+
+  - Remote procedure call
+  - Suporte para:
+    1. Balanceamento de carga
+    2. Rastreamento
+    3. Verificação de integridade
+    4. Autentificação
+  - RPC Tradicional:
+    - Modelo síncrono de cliente servidor
+  - RPC assícrono
+    - Modelo assíncrono de cliente servidor
+
+- Protobuf
+  - IDL: Linguagem de definição de interface
+  - Toda a comunicação do sistema definida no sistema do protobuf
