@@ -69,58 +69,22 @@ https://www.mongodb.com/blog/post/quick-start-golang--mongodb--how-to-read-docum
 
 # GO
 
-- Características:
+## Características:
   - Expansiva, limpa e eficiente
   - Simples: usa um paradigma procedural
   - Confiável e Eficiente: feita para garantir que as funções sejam executadas de maneira fácil, concorrente e rápida
   - Compilada e tipada: garante que não subirá muito dos erros de código para a produção
   - Pode gerar builds de difentes sistemas operaconais na sua aplicação
 
-# Dockerizando o GoLang
+## Go mod:
 
-Vídeo de base: https://www.youtube.com/watch?v=uDCzxwFT2-w&ab_channel=AprendaGolang
-
-- Iniciando o Daemon do Docker
-
-- Para consultar o status do Daemon do Docker:
-
-```
-sudo systemctl status docker
-```
-
-Caso Active esteja parado:
-
-```
-sudo systemctl start docker)
-```
-
-- Adicionando um usuário ao docker
-
-```
-sudo usermod -aG docker $USER
-```
-
-Para ativar as alterações:
-
-```
-newgrp docker
-```
-
-- Ativar daemon do Docker para iniciar com o boot:
-
-```
-sudo systemctl enable docker
-```
-
-- Go mod:
-
-  - Go mod init
+- Go mod init
 
 ```
 go mod init [module-path]
 ```
 
-    - Exemplo:
+- Exemplo:
 
 ```
 go mod init github.com/Alexsander-Espindola...
@@ -152,10 +116,66 @@ go mod graph [-go=version]
 
 O comando go mod graph imprime o gráfico de requisitos do módulo (com substituições aplicadas) em forma de texto.
 
+# Dockerizando o GoLang
+
+Vídeo de base: https://www.youtube.com/watch?v=uDCzxwFT2-w&ab_channel=AprendaGolang
+
+- Iniciando o Daemon do Docker
+
+- Para consultar o status do Daemon do Docker:
+
+```
+sudo systemctl status docker
+```
+
+- Caso Active esteja parado:
+
+```
+sudo systemctl start docker)
+```
+
+- Adicionando um usuário ao docker
+
+```
+sudo usermod -aG docker $USER
+```
+
+- Para ativar as alterações:
+
+```
+newgrp docker
+```
+
+- Ativar daemon do Docker para iniciar com o boot:
+
+```
+sudo systemctl enable docker
+```
+
 - Rodando o docker:
 
 ```
 docker run -p 8080:8080 my-server
+```
+
+## Docker com Mongo
+
+- Fonte:
+
+```
+https://www.mongodb.com/compatibility/docker
+```
+
+- Iniciando
+
+```
+docker run --name mongodb -d mongo
+```
+
+- Criando porta
+
+```
+docker run --name mongodb -d -p 27017:27017 mongo
 ```
 
 # Conectando ao MongoDB com Go
@@ -188,26 +208,6 @@ client, err := mongo.Connect(ctx, options.Client().ApplyURI("mongodb://localhost
 ```
 https://www.mongodb.com/docs/drivers/go/current/fundamentals/bson/
 
-```
-
-# Docker com Mongo
-
-- Fonte:
-
-```
-https://www.mongodb.com/compatibility/docker
-```
-
-- Iniciando
-
-```
-docker run --name mongodb -d mongo
-```
-
-- Criando porta
-
-```
-docker run --name mongodb -d -p 27017:27017 mongo
 ```
 
 # gRPC
