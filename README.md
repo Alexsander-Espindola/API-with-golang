@@ -183,6 +183,13 @@ defer cancel()
 client, err := mongo.Connect(ctx, options.Client().ApplyURI("mongodb://localhost:27017"))
 ```
 
+- Work with BSON
+
+```
+https://www.mongodb.com/docs/drivers/go/current/fundamentals/bson/
+
+```
+
 # Docker com Mongo
 
 - Fonte:
@@ -207,7 +214,72 @@ docker run --name mongodb -d -p 27017:27017 mongo
 
 Fonte:
 
+```
 https://www.youtube.com/watch?v=F4t3ZBVMlvo&ab_channel=C%C3%B3digoFonteTV
+```
+
+- Nesse repo mostra alguns posntos positivos e negativos de usar o gRPC
+
+```
+https://github.com/felipeagger/gRPC
+```
+
+## Protoc
+
+- Instalação (Linux)
+
+```
+$ sudo apt install protobuf-compiler
+```
+
+- Verificação da instalação
+
+```
+$ protoc --version
+```
+
+- Resposta
+
+```
+libprotoc *.*
+```
+
+- Go get para o gRPC
+
+```
+go get google.golang.org/protobuf/cmd/protoc-gen-go
+go get google.golang.org/grpc/cmd/protoc-gen-go-grpc
+export PATH="$PATH:$(go env GOPATH)/bin"
+```
+
+- Iniciando o protocolbuffer
+  - Cria uma pasta proto com um arquivo inicializador do proto:
+
+```
+// caminho: src/proto/protoUser.proto
+syntax = "proto3";
+option go_package="proto/pb";
+```
+
+- Cria algumas messages e um service
+
+```
+message Request {
+  string message = 1;
+}
+message Response {
+  int32 status = 1;
+}
+service SendMessage {
+  rpc RequestMessage (Request) returns (Response){}
+}
+```
+
+- Comando para inicializar o proto
+
+```
+protoc --go_out=. --go-grpc_out=. proto/*.proto
+```
 
 - Caractrísticas:
 
