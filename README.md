@@ -7,22 +7,23 @@
 
 ## Fontes que eu usei para o estudo
 
-    - Golang (A Linguagem do Futuro?) // Dicionário do Programador
+- Golang (A Linguagem do Futuro?) // Dicionário do Programador
+```
+https://www.youtube.com/watch?v=2kyNEf9IsBQ&ab_channel=C%C3%B3digoFonteTV
+```
 
-    https://www.youtube.com/watch?v=2kyNEf9IsBQ&ab_channel=C%C3%B3digoFonteTV
-
-
-    - Playlist Go lang do zero
-
-      https://www.youtube.com/watch?v=_MkQLDMak-4&list=PL5aY_NrL1rjucQqO21QH8KclsLDYu1BIg&index=1&ab_channel=FullCycle
-
-    - O que é gRPC?
-
-    https://www.youtube.com/watch?v=AxYEyvX3xxI&ab_channel=FullCycle
-
-    - gRPC (Nem toda comunicação usa API) // Dicionário do Programador
-
-    https://www.youtube.com/watch?v=F4t3ZBVMlvo&ab_channel=C%C3%B3digoFonteTV
+- Playlist Go lang do zero
+```
+https://www.youtube.com/watch?v=_MkQLDMak-4&list=PL5aY_NrL1rjucQqO21QH8KclsLDYu1BIg&index=1&ab_channel=FullCycle
+```
+- O que é gRPC?
+```
+https://www.youtube.com/watch?v=AxYEyvX3xxI&ab_channel=FullCycle
+```
+- gRPC (Nem toda comunicação usa API) // Dicionário do Programador
+```
+https://www.youtube.com/watch?v=F4t3ZBVMlvo&ab_channel=C%C3%B3digoFonteTV
+```
 
 # GO
 
