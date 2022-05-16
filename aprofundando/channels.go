@@ -78,8 +78,8 @@ func VariosChannels() {
 	}
 }
 
-func main() {
-	// ChannelSimples()
-	// ChannelComplexo()
-	VariosChannels()
-}
+// func main() {
+// 	// ChannelSimples()
+// 	// ChannelComplexo()
+// 	VariosChannels()
+// }

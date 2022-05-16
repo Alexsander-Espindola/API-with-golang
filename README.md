@@ -8,21 +8,63 @@
 ## Fontes que eu usei para o estudo
 
 - Golang (A Linguagem do Futuro?) // Dicionário do Programador
+
 ```
 https://www.youtube.com/watch?v=2kyNEf9IsBQ&ab_channel=C%C3%B3digoFonteTV
 ```
 
 - Playlist Go lang do zero
+
 ```
 https://www.youtube.com/watch?v=_MkQLDMak-4&list=PL5aY_NrL1rjucQqO21QH8KclsLDYu1BIg&index=1&ab_channel=FullCycle
 ```
+
 - O que é gRPC?
+
 ```
 https://www.youtube.com/watch?v=AxYEyvX3xxI&ab_channel=FullCycle
 ```
+
 - gRPC (Nem toda comunicação usa API) // Dicionário do Programador
+
 ```
 https://www.youtube.com/watch?v=F4t3ZBVMlvo&ab_channel=C%C3%B3digoFonteTV
+```
+
+- Como fazer um Dockerfile otimizado para Golang
+
+```
+https://www.youtube.com/watch?v=uDCzxwFT2-w
+```
+
+- Quick Start: Golang & MongoDB
+
+```
+https://www.mongodb.com/blog/post/quick-start-golang--mongodb--how-to-read-documents
+```
+
+- GoLang - Inserindo e buscando dados do MongoDB
+
+```
+https://www.youtube.com/watch?v=TtnI6nPhzgQ&ab_channel=HunCoding
+```
+
+- Mongo Go Drive
+
+```
+https://github.com/mongodb/mongo-go-driver
+```
+
+- Quick Start: Golang & MongoDB
+
+```
+https://www.mongodb.com/blog/post/quick-start-golang--mongodb--how-to-read-documents
+```
+
+- Quick Start: Golang & MongoDB
+
+```
+https://www.mongodb.com/blog/post/quick-start-golang--mongodb--how-to-read-documents
 ```
 
 # GO
@@ -114,6 +156,51 @@ O comando go mod graph imprime o gráfico de requisitos do módulo (com substitu
 
 ```
 docker run -p 8080:8080 my-server
+```
+
+# Conectando ao MongoDB com Go
+
+- Instalação
+
+```
+go get go.mongodb.org/mongo-driver/mongo
+```
+
+- Conexão com o Mongo
+
+```
+import (
+    "context"
+    "time"
+
+    "go.mongodb.org/mongo-driver/mongo"
+    "go.mongodb.org/mongo-driver/mongo/options"
+    "go.mongodb.org/mongo-driver/mongo/readpref"
+)
+
+ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+defer cancel()
+client, err := mongo.Connect(ctx, options.Client().ApplyURI("mongodb://localhost:27017"))
+```
+
+# Docker com Mongo
+
+- Fonte:
+
+```
+https://www.mongodb.com/compatibility/docker
+```
+
+- Iniciando
+
+```
+docker run --name mongodb -d mongo
+```
+
+- Criando porta
+
+```
+docker run --name mongodb -d -p 27017:27017 mongo
 ```
 
 # gRPC
