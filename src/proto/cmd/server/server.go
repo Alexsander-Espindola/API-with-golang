@@ -13,7 +13,7 @@ import (
 func main() {
 	grpcServer := grpc.NewServer()
 
-	pb.RegisterPostUserServer(grpcServer, &servers.PostUserClient{})
+	pb.RegisterPostUserServer(grpcServer, &servers.Server{})
 
 	listener, err := net.Listen("tcp", ":50051")
 	utils.GetErro(err)

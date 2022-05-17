@@ -9,10 +9,14 @@ message User {
   string Estado = 4;
 }
 
+message UserRequest {
+  User User = 1;
+}
+
 message UserResponse {
   int32 status = 1;
 }
 
 service PostUser {
-  rpc PostUser (User) returns (UserResponse){}
+  rpc PostUser (UserRequest) returns (UserResponse){};
 }

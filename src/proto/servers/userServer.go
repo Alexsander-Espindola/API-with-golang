@@ -7,19 +7,19 @@ import (
 	"github.com/Alexsander-Espindola/API-with-golang/src/proto/pb"
 )
 
-type PostUserClient struct {
+type Server struct {
 	pb.UnimplementedPostUserServer
 }
 
-func (c *PostUserClient) PostUser(ctx context.Context, in *pb.User) (*pb.UserResponse, error) {
+func (service *Server) PostUser(ctx context.Context, in *pb.UserRequest) (*pb.UserResponse, error) {
 	endereco := model.Endereco{
-		Cidade: in.GetCidade(),
-		Estado: in.GetEstado(),
+		Cidade: in.User.GetCidade(),
+		Estado: in.User.GetEstado(),
 	}
 
 	user := model.User{
-		Name:     in.GetName(),
-		Email:    in.GetEmail(),
+		Name:     in.User.GetName(),
+		Email:    in.User.GetEmail(),
 		Endereco: endereco,
 	}
 
