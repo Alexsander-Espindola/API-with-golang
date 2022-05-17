@@ -174,12 +174,6 @@ https://www.mongodb.com/docs/drivers/go/current/fundamentals/bson/
 
 # gRPC
 
-Fonte:
-
-```
-https://www.youtube.com/watch?v=F4t3ZBVMlvo&ab_channel=C%C3%B3digoFonteTV
-```
-
 - Um artigo incrível sobre o gRPC (ainda não li tudo)
 
 ```
