@@ -8,77 +8,83 @@
 ## Fontes que eu usei para o estudo
 
 - Golang (A Linguagem do Futuro?) // Dicionário do Programador
+
 ```
 https://www.youtube.com/watch?v=2kyNEf9IsBQ&ab_channel=C%C3%B3digoFonteTV
 ```
 
 - Playlist Go lang do zero
+
 ```
 https://www.youtube.com/watch?v=_MkQLDMak-4&list=PL5aY_NrL1rjucQqO21QH8KclsLDYu1BIg&index=1&ab_channel=FullCycle
 ```
+
 - O que é gRPC?
+
 ```
 https://www.youtube.com/watch?v=AxYEyvX3xxI&ab_channel=FullCycle
 ```
+
 - gRPC (Nem toda comunicação usa API) // Dicionário do Programador
+
 ```
 https://www.youtube.com/watch?v=F4t3ZBVMlvo&ab_channel=C%C3%B3digoFonteTV
 ```
 
+- Como fazer um Dockerfile otimizado para Golang
+
+```
+https://www.youtube.com/watch?v=uDCzxwFT2-w
+```
+
+- Quick Start: Golang & MongoDB
+
+```
+https://www.mongodb.com/blog/post/quick-start-golang--mongodb--how-to-read-documents
+```
+
+- GoLang - Inserindo e buscando dados do MongoDB
+
+```
+https://www.youtube.com/watch?v=TtnI6nPhzgQ&ab_channel=HunCoding
+```
+
+- Mongo Go Drive
+
+```
+https://github.com/mongodb/mongo-go-driver
+```
+
+- Quick Start: Golang & MongoDB
+
+```
+https://www.mongodb.com/blog/post/quick-start-golang--mongodb--how-to-read-documents
+```
+
+- Quick Start: Golang & MongoDB
+
+```
+https://www.mongodb.com/blog/post/quick-start-golang--mongodb--how-to-read-documents
+```
+
 # GO
 
-- Características:
+## Características:
   - Expansiva, limpa e eficiente
   - Simples: usa um paradigma procedural
   - Confiável e Eficiente: feita para garantir que as funções sejam executadas de maneira fácil, concorrente e rápida
   - Compilada e tipada: garante que não subirá muito dos erros de código para a produção
   - Pode gerar builds de difentes sistemas operaconais na sua aplicação
 
-# Dockerizando o GoLang
+## Go mod:
 
-Vídeo de base: https://www.youtube.com/watch?v=uDCzxwFT2-w&ab_channel=AprendaGolang
-
-- Iniciando o Daemon do Docker
-
-- Para consultar o status do Daemon do Docker:
-
-```
-sudo systemctl status docker
-```
-
-Caso Active esteja parado:
-
-```
-sudo systemctl start docker)
-```
-
-- Adicionando um usuário ao docker
-
-```
-sudo usermod -aG docker $USER
-```
-
-Para ativar as alterações:
-
-```
-newgrp docker
-```
-
-- Ativar daemon do Docker para iniciar com o boot:
-
-```
-sudo systemctl enable docker
-```
-
-- Go mod:
-
-  - Go mod init
+- Go mod init
 
 ```
 go mod init [module-path]
 ```
 
-    - Exemplo:
+- Exemplo:
 
 ```
 go mod init github.com/Alexsander-Espindola...
@@ -110,17 +116,171 @@ go mod graph [-go=version]
 
 O comando go mod graph imprime o gráfico de requisitos do módulo (com substituições aplicadas) em forma de texto.
 
+# Dockerizando o GoLang
+
+Vídeo de base: https://www.youtube.com/watch?v=uDCzxwFT2-w&ab_channel=AprendaGolang
+
+- Iniciando o Daemon do Docker
+
+- Para consultar o status do Daemon do Docker:
+
+```
+sudo systemctl status docker
+```
+
+- Caso Active esteja parado:
+
+```
+sudo systemctl start docker)
+```
+
+- Adicionando um usuário ao docker
+
+```
+sudo usermod -aG docker $USER
+```
+
+- Para ativar as alterações:
+
+```
+newgrp docker
+```
+
+- Ativar daemon do Docker para iniciar com o boot:
+
+```
+sudo systemctl enable docker
+```
+
 - Rodando o docker:
 
 ```
 docker run -p 8080:8080 my-server
 ```
 
+## Docker com Mongo
+
+- Fonte:
+
+```
+https://www.mongodb.com/compatibility/docker
+```
+
+- Iniciando
+
+```
+docker run --name mongodb -d mongo
+```
+
+- Criando porta
+
+```
+docker run --name mongodb -d -p 27017:27017 mongo
+```
+
+# Conectando ao MongoDB com Go
+
+- Instalação
+
+```
+go get go.mongodb.org/mongo-driver/mongo
+```
+
+- Conexão com o Mongo
+
+```
+import (
+    "context"
+    "time"
+
+    "go.mongodb.org/mongo-driver/mongo"
+    "go.mongodb.org/mongo-driver/mongo/options"
+    "go.mongodb.org/mongo-driver/mongo/readpref"
+)
+
+ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+defer cancel()
+client, err := mongo.Connect(ctx, options.Client().ApplyURI("mongodb://localhost:27017"))
+```
+
+- Work with BSON
+
+```
+https://www.mongodb.com/docs/drivers/go/current/fundamentals/bson/
+
+```
+
 # gRPC
 
 Fonte:
 
+```
 https://www.youtube.com/watch?v=F4t3ZBVMlvo&ab_channel=C%C3%B3digoFonteTV
+```
+
+- Um artigo incrível sobre o gRPC (ainda não li tudo)
+
+```
+https://www.linkedin.com/pulse/grpc-jose-r-f-junior/?originalSubdomain=pt
+```
+
+## Protoc
+
+- Instalação (Linux)
+
+```
+$ sudo apt install protobuf-compiler
+```
+
+- Verificação da instalação
+
+```
+$ protoc --version
+```
+
+- Resposta
+
+```
+libprotoc *.*
+```
+
+- Go get para o gRPC
+
+```
+go get google.golang.org/protobuf/cmd/protoc-gen-go
+go get google.golang.org/grpc/cmd/protoc-gen-go-grpc
+export PATH="$PATH:$(go env GOPATH)/bin"
+```
+
+- Iniciando o protocolbuffer
+  - Cria uma pasta proto com um arquivo inicializador do proto:
+
+```
+// caminho: src/proto/protoUser.proto
+syntax = "proto3";
+option go_package="proto/pb";
+```
+
+- Cria algumas messages e um service
+
+```
+message Request {
+  string message = 1;
+}
+message Response {
+  int32 status = 1;
+}
+service SendMessage {
+  rpc RequestMessage (Request) returns (Response){}
+}
+```
+
+- Comando para inicializar o proto
+
+```
+cd src
+protoc --go_out=. --go-grpc_out=. proto/*.proto
+```
 
 - Caractrísticas:
 

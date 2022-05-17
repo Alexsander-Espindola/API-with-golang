@@ -1,0 +1,17 @@
+syntax = "proto3";
+package protobuff;
+option go_package="proto/pb";
+
+message User {
+  string Name = 1;
+  string Email = 2;
+  string Cpf = 3;
+}
+
+message Response {
+  int32 status = 1;
+}
+
+service PostUser {
+  rpc PostUser (User) returns (Response){}
+}
