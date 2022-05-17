@@ -7,6 +7,7 @@ import (
 	"github.com/Alexsander-Espindola/API-with-golang/src/utils"
 )
 
+// PostUser adiciona um usuario na Collection userData do banco de dados
 func PostUser(user User) {
 	db := GetConnection()
 	collection := db.Database("user").Collection("userData")
@@ -15,9 +16,10 @@ func PostUser(user User) {
 	if err != nil {
 		utils.GetErro(err)
 	}
+	fmt.Println(*result)
+}
 
-	fmt.Println(result)
+//
+func FindOneUser() {
 
-	fmt.Println("Teste")
-	fmt.Println(user)
 }

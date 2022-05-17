@@ -3,6 +3,9 @@ package utils
 import "log"
 
 func GetErro(err error) error {
-	log.Fatal(err.Error())
-	return err
+	if err != nil {
+		log.Fatal(err)
+		return err
+	}
+	return nil
 }
