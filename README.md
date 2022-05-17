@@ -5,7 +5,6 @@
 1. Iniciando mongodb com docker
 
 ```
-
 docker run --name mongodb -d -p 27017:27017 mongo
 ```
 
@@ -15,15 +14,13 @@ docker run --name mongodb -d -p 27017:27017 mongo
 go run src/proto/cmd/server/server.go
 ```
 
-3. Inciando o cliente para o user
+3. Iniciando o cliente para o user
 
 ```
 go run src/proto/cmd/client/client.go
 ```
 
 # Aprendizados do projeto
-
-## Ferramentas
 
 - GO lang
 - gRPC
@@ -35,8 +32,8 @@ go run src/proto/cmd/client/client.go
 - Expansiva, limpa e eficiente
 - Simples: usa um paradigma procedural
 - Confiável e Eficiente: feita para garantir que as funções sejam executadas de maneira fácil, concorrente e rápida
-- Compilada e tipada: garante que não subirá muito dos erros de código para a produção
-- Pode gerar builds de difentes sistemas operaconais na sua aplicação
+- Compilada e tipada: garante que não subirá grande parte dos possíveis erros de código para a produção
+- Pode gerar builds de diferentes sistemas operacionais na sua aplicação
 
 ## Go mod:
 
@@ -82,7 +79,7 @@ O comando go mod graph imprime o gráfico de requisitos do módulo (com substitu
 
 Vídeo de base: https://www.youtube.com/watch?v=uDCzxwFT2-w&ab_channel=AprendaGolang
 
-- Iniciando o Daemon do Docker
+## Iniciando o Daemon do Docker
 
 - Para consultar o status do Daemon do Docker:
 
@@ -152,12 +149,12 @@ go get go.mongodb.org/mongo-driver/mongo
 
 ```
 import (
-    "context"
-    "time"
+   "context"
+   "time"
 
-    "go.mongodb.org/mongo-driver/mongo"
-    "go.mongodb.org/mongo-driver/mongo/options"
-    "go.mongodb.org/mongo-driver/mongo/readpref"
+   "go.mongodb.org/mongo-driver/mongo"
+   "go.mongodb.org/mongo-driver/mongo/options"
+   "go.mongodb.org/mongo-driver/mongo/readpref"
 )
 
 ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
@@ -208,8 +205,8 @@ go get google.golang.org/grpc/cmd/protoc-gen-go-grpc
 export PATH="$PATH:$(go env GOPATH)/bin"
 ```
 
-- Iniciando o protocolbuffer
-  - Cria uma pasta proto com um arquivo inicializador do proto:
+- Iniciando o protocol buffer
+- Cria uma pasta proto com um arquivo inicializador do proto:
 
 ```
 // caminho: src/proto/protoUser.proto
@@ -221,13 +218,13 @@ option go_package="proto/pb";
 
 ```
 message Request {
-  string message = 1;
+ string message = 1;
 }
 message Response {
-  int32 status = 1;
+ int32 status = 1;
 }
 service SendMessage {
-  rpc RequestMessage (Request) returns (Response){}
+ rpc RequestMessage (Request) returns (Response){}
 }
 ```
 
@@ -238,29 +235,30 @@ cd src
 protoc --go_out=. --go-grpc_out=. proto/*.proto
 ```
 
-- Caractrísticas:
+- Características:
 
-  - Código aberto
-  - Alto desempenho de chamadas ente sistemas
-  - Tem o objetivo de ser mais leve e performático do que as APIs REST tradicionais
-  - Usa versão HTTP2 para codificar o pacote de forma binária
+- Código aberto
+- Alto desempenho de chamadas ente sistemas
+- Tem o objetivo de ser mais leve e performático do que as APIs REST tradicionais
+- Usa versão HTTP 2 para codificar o pacote de forma binária
 
 - Padrão RPC:
 
-  - Remote procedure call
-  - Suporte para:
-    1. Balanceamento de carga
-    2. Rastreamento
-    3. Verificação de integridade
-    4. Autentificação
-  - RPC Tradicional:
-    - Modelo síncrono de cliente servidor
-  - RPC assícrono
-    - Modelo assíncrono de cliente servidor
+- Remote procedure call
+- Suporte para:
+  1.  Balanceamento de carga
+  2.  Rastreamento
+  3.  Verificação de integridade
+  4.  Autentificação
+- RPC Tradicional:
+  - Modelo síncrono de cliente servidor
+- RPC assíncrono
+
+  - Modelo assíncrono de cliente servidor
 
 - Protobuf
-  - IDL: Linguagem de definição de interface
-  - Toda a comunicação do sistema definida no sistema do protobuf
+- IDL: Linguagem de definição de interface
+- Toda a comunicação do sistema definida no sistema do protobuf
 
 ## Fontes que eu usei para o estudo
 
@@ -270,7 +268,7 @@ protoc --go_out=. --go-grpc_out=. proto/*.proto
 https://www.youtube.com/watch?v=2kyNEf9IsBQ&ab_channel=C%C3%B3digoFonteTV
 ```
 
-- Playlist Go lang do zero
+- Playlist Golang do zero
 
 ```
 https://www.youtube.com/watch?v=_MkQLDMak-4&list=PL5aY_NrL1rjucQqO21QH8KclsLDYu1BIg&index=1&ab_channel=FullCycle
