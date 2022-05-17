@@ -2,10 +2,23 @@
 
 ## Rodando com gRPC server
 
-- Iniciando o servidor para o user
+1. Iniciando mongodb com docker
+
+```
+
+docker run --name mongodb -d -p 27017:27017 mongo
+```
+
+2. Iniciando o servidor para o user
 
 ```
 go run src/proto/cmd/server/server.go
+```
+
+3. Inciando o cliente para o user
+
+```
+go run src/proto/cmd/client/client.go
 ```
 
 # Aprendizados do projeto
@@ -14,68 +27,6 @@ go run src/proto/cmd/server/server.go
 
 - GO lang
 - gRPC
-
-## Fontes que eu usei para o estudo
-
-- Golang (A Linguagem do Futuro?) // Dicionário do Programador
-
-```
-https://www.youtube.com/watch?v=2kyNEf9IsBQ&ab_channel=C%C3%B3digoFonteTV
-```
-
-- Playlist Go lang do zero
-
-```
-https://www.youtube.com/watch?v=_MkQLDMak-4&list=PL5aY_NrL1rjucQqO21QH8KclsLDYu1BIg&index=1&ab_channel=FullCycle
-```
-
-- O que é gRPC?
-
-```
-https://www.youtube.com/watch?v=AxYEyvX3xxI&ab_channel=FullCycle
-```
-
-- gRPC (Nem toda comunicação usa API) // Dicionário do Programador
-
-```
-https://www.youtube.com/watch?v=F4t3ZBVMlvo&ab_channel=C%C3%B3digoFonteTV
-```
-
-- Como fazer um Dockerfile otimizado para Golang
-
-```
-https://www.youtube.com/watch?v=uDCzxwFT2-w
-```
-
-- Quick Start: Golang & MongoDB
-
-```
-https://www.mongodb.com/blog/post/quick-start-golang--mongodb--how-to-read-documents
-```
-
-- GoLang - Inserindo e buscando dados do MongoDB
-
-```
-https://www.youtube.com/watch?v=TtnI6nPhzgQ&ab_channel=HunCoding
-```
-
-- Mongo Go Drive
-
-```
-https://github.com/mongodb/mongo-go-driver
-```
-
-- Quick Start: Golang & MongoDB
-
-```
-https://www.mongodb.com/blog/post/quick-start-golang--mongodb--how-to-read-documents
-```
-
-- Quick Start: Golang & MongoDB
-
-```
-https://www.mongodb.com/blog/post/quick-start-golang--mongodb--how-to-read-documents
-```
 
 # GO
 
@@ -316,3 +267,72 @@ protoc --go_out=. --go-grpc_out=. proto/*.proto
 - Protobuf
   - IDL: Linguagem de definição de interface
   - Toda a comunicação do sistema definida no sistema do protobuf
+
+## Fontes que eu usei para o estudo
+
+- Golang (A Linguagem do Futuro?) // Dicionário do Programador
+
+```
+https://www.youtube.com/watch?v=2kyNEf9IsBQ&ab_channel=C%C3%B3digoFonteTV
+```
+
+- Playlist Go lang do zero
+
+```
+https://www.youtube.com/watch?v=_MkQLDMak-4&list=PL5aY_NrL1rjucQqO21QH8KclsLDYu1BIg&index=1&ab_channel=FullCycle
+```
+
+- O que é gRPC?
+
+```
+https://www.youtube.com/watch?v=AxYEyvX3xxI&ab_channel=FullCycle
+```
+
+- gRPC (Nem toda comunicação usa API) // Dicionário do Programador
+
+```
+https://www.youtube.com/watch?v=F4t3ZBVMlvo&ab_channel=C%C3%B3digoFonteTV
+```
+
+- Como fazer um Dockerfile otimizado para Golang
+
+```
+https://www.youtube.com/watch?v=uDCzxwFT2-w
+```
+
+- Quick Start: Golang & MongoDB
+
+```
+https://www.mongodb.com/blog/post/quick-start-golang--mongodb--how-to-read-documents
+```
+
+- GoLang - Inserindo e buscando dados do MongoDB
+
+```
+https://www.youtube.com/watch?v=TtnI6nPhzgQ&ab_channel=HunCoding
+```
+
+- Mongo Go Drive
+
+```
+https://github.com/mongodb/mongo-go-driver
+```
+
+- Quick Start: Golang & MongoDB
+
+```
+https://www.mongodb.com/blog/post/quick-start-golang--mongodb--how-to-read-documents
+```
+
+- [GOLANG] Como utilizar o gRPC com GO!
+
+```
+https://www.youtube.com/watch?v=LuS59XHdKG8&ab_channel=Yuri
+https://github.com/hyperyuri/grpc-with-go
+```
+
+- gRPC na Prática
+
+```
+https://www.youtube.com/watch?v=VMCRRznA3g0&ab_channel=FullCycle
+```
