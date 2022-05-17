@@ -1,3 +1,13 @@
+# Rodando a aplicação
+
+## Rodando com gRPC server
+
+- Iniciando o servidor para o user
+
+```
+go run src/proto/cmd/server/server.go
+```
+
 # Aprendizados do projeto
 
 ## Ferramentas
@@ -70,11 +80,12 @@ https://www.mongodb.com/blog/post/quick-start-golang--mongodb--how-to-read-docum
 # GO
 
 ## Características:
-  - Expansiva, limpa e eficiente
-  - Simples: usa um paradigma procedural
-  - Confiável e Eficiente: feita para garantir que as funções sejam executadas de maneira fácil, concorrente e rápida
-  - Compilada e tipada: garante que não subirá muito dos erros de código para a produção
-  - Pode gerar builds de difentes sistemas operaconais na sua aplicação
+
+- Expansiva, limpa e eficiente
+- Simples: usa um paradigma procedural
+- Confiável e Eficiente: feita para garantir que as funções sejam executadas de maneira fácil, concorrente e rápida
+- Compilada e tipada: garante que não subirá muito dos erros de código para a produção
+- Pode gerar builds de difentes sistemas operaconais na sua aplicação
 
 ## Go mod:
 
