@@ -22,7 +22,7 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type PostUserClient interface {
-	PostUser(ctx context.Context, in *User, opts ...grpc.CallOption) (*Response, error)
+	PostUser(ctx context.Context, in *UserRequest, opts ...grpc.CallOption) (*UserResponse, error)
 }
 
 type postUserClient struct {
@@ -33,8 +33,8 @@ func NewPostUserClient(cc grpc.ClientConnInterface) PostUserClient {
 	return &postUserClient{cc}
 }
 
-func (c *postUserClient) PostUser(ctx context.Context, in *User, opts ...grpc.CallOption) (*Response, error) {
-	out := new(Response)
+func (c *postUserClient) PostUser(ctx context.Context, in *UserRequest, opts ...grpc.CallOption) (*UserResponse, error) {
+	out := new(UserResponse)
 	err := c.cc.Invoke(ctx, "/protobuff.PostUser/PostUser", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -46,7 +46,7 @@ func (c *postUserClient) PostUser(ctx context.Context, in *User, opts ...grpc.Ca
 // All implementations must embed UnimplementedPostUserServer
 // for forward compatibility
 type PostUserServer interface {
-	PostUser(context.Context, *User) (*Response, error)
+	PostUser(context.Context, *UserRequest) (*UserResponse, error)
 	mustEmbedUnimplementedPostUserServer()
 }
 
@@ -54,7 +54,7 @@ type PostUserServer interface {
 type UnimplementedPostUserServer struct {
 }
 
-func (UnimplementedPostUserServer) PostUser(context.Context, *User) (*Response, error) {
+func (UnimplementedPostUserServer) PostUser(context.Context, *UserRequest) (*UserResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method PostUser not implemented")
 }
 func (UnimplementedPostUserServer) mustEmbedUnimplementedPostUserServer() {}
@@ -71,7 +71,7 @@ func RegisterPostUserServer(s grpc.ServiceRegistrar, srv PostUserServer) {
 }
 
 func _PostUser_PostUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(User)
+	in := new(UserRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -83,7 +83,7 @@ func _PostUser_PostUser_Handler(srv interface{}, ctx context.Context, dec func(i
 		FullMethod: "/protobuff.PostUser/PostUser",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PostUserServer).PostUser(ctx, req.(*User))
+		return srv.(PostUserServer).PostUser(ctx, req.(*UserRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
