@@ -1,0 +1,16 @@
+syntax = "proto3";
+package protobuff;
+option go_package="proto/pb";
+
+
+message Request {
+  string message = 1;
+}
+
+message Response {
+  int32 status = 1;
+}
+
+service SendMessage {
+  rpc RequestMessage (Request) returns (Response){}
+}

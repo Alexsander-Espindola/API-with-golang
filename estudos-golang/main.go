@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/Alexsander-Espindola/API-with-golang/aprendendo"
+	"github.com/Alexsander-Espindola/API-with-golang/estudos-golang/aprendendo"
 )
 
 // Criando métodos
