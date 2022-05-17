@@ -11,9 +11,7 @@ import (
 // GetConnection cria uma conexão com o banco de dados na porta 27017
 func GetConnection() *mongo.Client {
 	db, err := mongo.Connect(context.Background(), options.Client().ApplyURI("mongodb://localhost:27017"))
-	if err != nil {
-		utils.GetErro(err)
-	}
+	utils.GetErro(err)
 
 	return db
 }

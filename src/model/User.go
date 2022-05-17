@@ -13,9 +13,7 @@ func PostUser(user User) {
 	collection := db.Database("user").Collection("userData")
 
 	result, err := collection.InsertOne(context.Background(), user)
-	if err != nil {
-		utils.GetErro(err)
-	}
+	utils.GetErro(err)
 	fmt.Println(*result)
 }
 

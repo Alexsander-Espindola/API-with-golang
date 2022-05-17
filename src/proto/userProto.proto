@@ -5,13 +5,14 @@ option go_package="proto/pb";
 message User {
   string Name = 1;
   string Email = 2;
-  string Cpf = 3;
+  string Cidade = 3;
+  string Estado = 4;
 }
 
-message Response {
+message UserResponse {
   int32 status = 1;
 }
 
 service PostUser {
-  rpc PostUser (User) returns (Response){}
+  rpc PostUser (User) returns (UserResponse){}
 }
