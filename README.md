@@ -218,10 +218,10 @@ Fonte:
 https://www.youtube.com/watch?v=F4t3ZBVMlvo&ab_channel=C%C3%B3digoFonteTV
 ```
 
-- Nesse repo mostra alguns posntos positivos e negativos de usar o gRPC
+- Um artigo incrível sobre o gRPC (ainda não li tudo)
 
 ```
-https://github.com/felipeagger/gRPC
+https://www.linkedin.com/pulse/grpc-jose-r-f-junior/?originalSubdomain=pt
 ```
 
 ## Protoc
@@ -278,6 +278,7 @@ service SendMessage {
 - Comando para inicializar o proto
 
 ```
+cd src
 protoc --go_out=. --go-grpc_out=. proto/*.proto
 ```
 
