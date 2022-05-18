@@ -31,7 +31,9 @@ go run src/proto/cmd/client/client.go
 ```
 
 ## Rodando os testes
-
+```
+go test src/model/user_test.go
+```
 # Aprendizados do projeto
 
 - GO lang
@@ -351,4 +353,10 @@ https://www.youtube.com/watch?v=1ig4JWzn30g&t=1434s
 
 ```
 https://www.youtube.com/watch?v=JP-D1In0juw&t=2085s&ab_channel=FullCycle
+```
+
+- RESTful API in Golang using Echo - MongoDB Unit Testing in Golang
+
+```
+https://www.youtube.com/watch?v=KC4Q2S2PACQ&ab_channel=krunalshimpi
 ```

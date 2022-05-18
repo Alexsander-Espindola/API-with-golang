@@ -5,6 +5,7 @@ import (
 
 	"github.com/Alexsander-Espindola/API-with-golang/src/model"
 	"github.com/Alexsander-Espindola/API-with-golang/src/proto/pb"
+	"github.com/Alexsander-Espindola/API-with-golang/src/utils"
 )
 
 type Server struct {
@@ -18,7 +19,8 @@ func (service *Server) PostUser(ctx context.Context, in *pb.UserRequest) (*pb.Us
 		Password: in.User.GetPassword(),
 	}
 
-	result := model.InsertUser(user)
+	result, _, err := model.InsertUser(user)
+	utils.GetErro(err)
 
 	return &pb.UserResponse{
 		Token: result,

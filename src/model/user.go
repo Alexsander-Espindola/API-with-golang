@@ -6,6 +6,7 @@ import (
 
 	"github.com/asaskevich/govalidator"
 	uuid "github.com/satori/go.uuid"
+	"go.mongodb.org/mongo-driver/mongo"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -49,19 +50,19 @@ func (user *User) validate() error {
 	return nil
 }
 
-func InsertUser(user User) (string, error) {
+func InsertUser(user User) (string, *mongo.InsertOneResult, error) {
 	db := GetConnection()
 	err := user.PrepareUser()
 	if err != nil {
-		return "", err
+		return "", nil, err
 	}
 
 	collection := db.Database("user").Collection("userData")
 
-	_, err = collection.InsertOne(context.Background(), user)
+	insertResult, err := collection.InsertOne(context.Background(), user)
 	if err != nil {
-		return "", err
+		return "", nil, err
 	}
 
-	return user.Token, nil
+	return user.Token, insertResult, nil
 }
