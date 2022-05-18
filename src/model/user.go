@@ -2,21 +2,19 @@ package model
 
 import (
 	"context"
-	"log"
+	"fmt"
 
-	"github.com/Alexsander-Espindola/API-with-golang/src/utils"
 	"github.com/asaskevich/govalidator"
 	uuid "github.com/satori/go.uuid"
-	"go.mongodb.org/mongo-driver/bson/primitive"
+	"go.mongodb.org/mongo-driver/mongo"
 	"golang.org/x/crypto/bcrypt"
 )
 
 type User struct {
-	ID       primitive.ObjectID `bson:"_id,omitempty`
-	Name     string             `bson:"name"`
-	Email    string             `bson:"email"`
-	Password string             `bson:"password"`
-	Token    string             `bson:"token"`
+	Name     string `bson:"name" valid:"notnull"`
+	Email    string `bson:"email" valid:"notnull, email"`
+	Password string `bson:"password" valid:"notnull"`
+	Token    string `bson:"token" valid:"notnull, uuid"`
 }
 
 func NewUser() *User {
@@ -24,15 +22,21 @@ func NewUser() *User {
 }
 
 func (user *User) PrepareUser() error {
+	if user.Password == "" {
+		return fmt.Errorf("Senha em branco")
+	}
+
 	password, err := bcrypt.GenerateFromPassword([]byte(user.Password), bcrypt.DefaultCost)
-	utils.GetErro(err)
+	if err != nil {
+		return err
+	}
 
 	user.Password = string(password)
 	user.Token = uuid.NewV4().String()
 
 	err = user.validate()
 	if err != nil {
-		log.Fatalf("Erro na validação do usuario: %v", err)
+		return err
 	}
 
 	return nil
@@ -40,18 +44,25 @@ func (user *User) PrepareUser() error {
 
 func (user *User) validate() error {
 	_, err := govalidator.ValidateStruct(user)
-	return err
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
-func InsertUser(user User) string {
+func InsertUser(user User) (string, *mongo.InsertOneResult, error) {
 	db := GetConnection()
 	err := user.PrepareUser()
-	utils.GetErro(err)
+	if err != nil {
+		return "", nil, err
+	}
 
 	collection := db.Database("user").Collection("userData")
 
-	_, err = collection.InsertOne(context.Background(), user)
-	utils.GetErro(err)
+	insertResult, err := collection.InsertOne(context.Background(), user)
+	if err != nil {
+		return "", nil, err
+	}
 
-	return user.Token
+	return user.Token, insertResult, nil
 }
