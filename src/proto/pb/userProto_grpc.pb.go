@@ -23,6 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type PostUserClient interface {
 	PostUser(ctx context.Context, in *UserRequest, opts ...grpc.CallOption) (*UserResponse, error)
+	TestStream(ctx context.Context, in *StreamRequest, opts ...grpc.CallOption) (PostUser_TestStreamClient, error)
 }
 
 type postUserClient struct {
@@ -42,11 +43,44 @@ func (c *postUserClient) PostUser(ctx context.Context, in *UserRequest, opts ...
 	return out, nil
 }
 
+func (c *postUserClient) TestStream(ctx context.Context, in *StreamRequest, opts ...grpc.CallOption) (PostUser_TestStreamClient, error) {
+	stream, err := c.cc.NewStream(ctx, &PostUser_ServiceDesc.Streams[0], "/protobuff.PostUser/TestStream", opts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &postUserTestStreamClient{stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+type PostUser_TestStreamClient interface {
+	Recv() (*StreamResponse, error)
+	grpc.ClientStream
+}
+
+type postUserTestStreamClient struct {
+	grpc.ClientStream
+}
+
+func (x *postUserTestStreamClient) Recv() (*StreamResponse, error) {
+	m := new(StreamResponse)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
 // PostUserServer is the server API for PostUser service.
 // All implementations must embed UnimplementedPostUserServer
 // for forward compatibility
 type PostUserServer interface {
 	PostUser(context.Context, *UserRequest) (*UserResponse, error)
+	TestStream(*StreamRequest, PostUser_TestStreamServer) error
 	mustEmbedUnimplementedPostUserServer()
 }
 
@@ -56,6 +90,9 @@ type UnimplementedPostUserServer struct {
 
 func (UnimplementedPostUserServer) PostUser(context.Context, *UserRequest) (*UserResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method PostUser not implemented")
+}
+func (UnimplementedPostUserServer) TestStream(*StreamRequest, PostUser_TestStreamServer) error {
+	return status.Errorf(codes.Unimplemented, "method TestStream not implemented")
 }
 func (UnimplementedPostUserServer) mustEmbedUnimplementedPostUserServer() {}
 
@@ -88,6 +125,27 @@ func _PostUser_PostUser_Handler(srv interface{}, ctx context.Context, dec func(i
 	return interceptor(ctx, in, info, handler)
 }
 
+func _PostUser_TestStream_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(StreamRequest)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(PostUserServer).TestStream(m, &postUserTestStreamServer{stream})
+}
+
+type PostUser_TestStreamServer interface {
+	Send(*StreamResponse) error
+	grpc.ServerStream
+}
+
+type postUserTestStreamServer struct {
+	grpc.ServerStream
+}
+
+func (x *postUserTestStreamServer) Send(m *StreamResponse) error {
+	return x.ServerStream.SendMsg(m)
+}
+
 // PostUser_ServiceDesc is the grpc.ServiceDesc for PostUser service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -100,6 +158,12 @@ var PostUser_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _PostUser_PostUser_Handler,
 		},
 	},
-	Streams:  []grpc.StreamDesc{},
+	Streams: []grpc.StreamDesc{
+		{
+			StreamName:    "TestStream",
+			Handler:       _PostUser_TestStream_Handler,
+			ServerStreams: true,
+		},
+	},
 	Metadata: "proto/userProto.proto",
 }

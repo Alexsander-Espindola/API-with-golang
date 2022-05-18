@@ -13,7 +13,7 @@ import (
 type User struct {
 	Name     string `bson:"name" valid:"notnull"`
 	Email    string `bson:"email" valid:"notnull, email"`
-	Password string `bson:"password" valid:"notnull"`
+	Password string `bson:"-" valid:"notnull"`
 	Token    string `bson:"token" valid:"notnull, uuid"`
 }
 

@@ -17,6 +17,15 @@ message UserResponse {
   string token = 1;
 }
 
+message StreamRequest {
+  string StrRequest = 1;
+}
+
+message StreamResponse {
+  string StrResponse = 1;
+}
+
 service PostUser {
   rpc PostUser (UserRequest) returns (UserResponse){};
-}
+  rpc TestStream (StreamRequest) returns (stream StreamResponse){};
+} 

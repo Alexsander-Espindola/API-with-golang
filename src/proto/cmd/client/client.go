@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"log"
 
 	"github.com/Alexsander-Espindola/API-with-golang/src/proto/pb"
@@ -14,8 +15,8 @@ func main() {
 		log.Fatalf("Erro na conexão com gRPC server: %v", err)
 	}
 
-	client := pb.NewPostUserClient(conn)
 	defer conn.Close()
+	client := pb.NewPostUserClient(conn)
 
 	req := &pb.UserRequest{
 		User: &pb.User{
@@ -29,6 +30,22 @@ func main() {
 	if err != nil {
 		log.Fatalf("Erro durante a requisição: %v", err)
 	}
-
 	log.Println(res)
+
+	streamReq := &pb.StreamRequest{
+		StrRequest: "Olá Stream",
+	}
+
+	responseSteam, err := client.TestStream(context.Background(), streamReq)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	for {
+		stream, err := responseSteam.Recv()
+		fmt.Printf("Stream: %v", stream.GetStrResponse())
+		if err != nil {
+			break
+		}
+	}
 }
