@@ -30,6 +30,8 @@ go run src/proto/cmd/server/server.go
 go run src/proto/cmd/client/client.go
 ```
 
+## Rodando os testes
+
 # Aprendizados do projeto
 
 - GO lang
@@ -337,4 +339,16 @@ https://github.com/hyperyuri/grpc-with-go
 
 ```
 https://www.youtube.com/watch?v=VMCRRznA3g0&ab_channel=FullCycle
+```
+
+- Plataforma de Desafios em Go Lang - Parte 1
+
+```
+https://www.youtube.com/watch?v=1ig4JWzn30g&t=1434s
+```
+
+- Go Lang: Validação e testes de usuário - Plataforma de desafios - Parte 2
+
+```
+https://www.youtube.com/watch?v=JP-D1In0juw&t=2085s&ab_channel=FullCycle
 ```
