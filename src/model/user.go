@@ -5,9 +5,9 @@ import (
 	"log"
 
 	"github.com/Alexsander-Espindola/API-with-golang/src/utils"
+	"github.com/asaskevich/govalidator"
 	uuid "github.com/satori/go.uuid"
 	"go.mongodb.org/mongo-driver/bson/primitive"
-	"go.mongodb.org/mongo-driver/mongo"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -39,17 +39,19 @@ func (user *User) PrepareUser() error {
 }
 
 func (user *User) validate() error {
-	return nil
+	_, err := govalidator.ValidateStruct(user)
+	return err
 }
 
-func InsertUser(db *mongo.Client, user User) mongo.InsertOneResult {
+func InsertUser(user User) string {
+	db := GetConnection()
 	err := user.PrepareUser()
 	utils.GetErro(err)
 
 	collection := db.Database("user").Collection("userData")
 
-	result, err := collection.InsertOne(context.Background(), user)
+	_, err = collection.InsertOne(context.Background(), user)
 	utils.GetErro(err)
 
-	return *result
+	return user.Token
 }

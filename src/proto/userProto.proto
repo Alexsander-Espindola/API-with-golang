@@ -5,8 +5,8 @@ option go_package="proto/pb";
 message User {
   string Name = 1;
   string Email = 2;
-  string Cidade = 3;
-  string Estado = 4;
+  string Password = 3;
+  string Token = 4;
 }
 
 message UserRequest {
@@ -14,7 +14,7 @@ message UserRequest {
 }
 
 message UserResponse {
-  int32 status = 1;
+  string token = 1;
 }
 
 service PostUser {
