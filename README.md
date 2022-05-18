@@ -104,7 +104,7 @@ sudo systemctl status docker
 - Caso Active esteja parado:
 
 ```
-sudo systemctl start docker)
+sudo systemctl start docker
 ```
 
 - Adicionando um usuário ao docker
@@ -129,26 +129,6 @@ sudo systemctl enable docker
 
 ```
 docker run -p 8080:8080 my-server
-```
-
-## Docker com Mongo
-
-- Fonte:
-
-```
-https://www.mongodb.com/compatibility/docker
-```
-
-- Iniciando
-
-```
-docker run --name mongodb -d mongo
-```
-
-- Criando porta
-
-```
-docker run --name mongodb -d -p 27017:27017 mongo
 ```
 
 # Conectando ao MongoDB com Go

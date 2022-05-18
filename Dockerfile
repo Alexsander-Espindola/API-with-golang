@@ -1,12 +1,18 @@
 FROM golang:1.18 AS build
 
-WORKDIR /src
+WORKDIR /app
 
 COPY go.mod ./
-COPY src/aprendendo.go ./
+COPY go.sum ./
 
-RUN go build -o /server
+RUN go mod download
+
+COPY *.go ./
+
+RUN go build -o /docker-golang-grpc
+RUN go run src/proto/cmd/server/server.go
+RUN go run src/proto/cmd/client/client.go
 
 EXPOSE 8080
 
-ENTRYPOINT ["/server"]
+CMD [ "/docker-golang-grpc" ]
