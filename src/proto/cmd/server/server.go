@@ -12,6 +12,7 @@ import (
 
 func main() {
 	grpcServer := grpc.NewServer()
+	fmt.Print("start server")
 
 	pb.RegisterPostUserServer(grpcServer, &servers.Server{})
 

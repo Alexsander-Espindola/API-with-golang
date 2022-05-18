@@ -1,3 +1,7 @@
+## Sumário
+
+[Rodando a aplicação](#Rodando a aplicação)
+
 # Rodando a aplicação
 
 ## Rodando com gRPC server
@@ -5,7 +9,13 @@
 1. Iniciando mongodb com docker
 
 ```
-docker run --name mongodb -d -p 27017:27017 mongo
+docker run --name mongodb-golang -d -p 27017:27017 mongo
+```
+
+- Se já tver rodado o comando acima antes rode:
+
+```
+docker container start mongodb-golang
 ```
 
 2. Iniciando o servidor para o user

@@ -19,10 +19,9 @@ func main() {
 
 	req := &pb.UserRequest{
 		User: &pb.User{
-			Name:   "Alexs",
-			Email:  "Alexs@gmail.com",
-			Cidade: "Ap de goiânia",
-			Estado: "Goiás",
+			Name:     "Alexs",
+			Email:    "Alexs@gmail.com",
+			Password: "1234567",
 		},
 	}
 

@@ -12,20 +12,15 @@ type Server struct {
 }
 
 func (service *Server) PostUser(ctx context.Context, in *pb.UserRequest) (*pb.UserResponse, error) {
-	endereco := model.Endereco{
-		Cidade: in.User.GetCidade(),
-		Estado: in.User.GetEstado(),
-	}
-
 	user := model.User{
 		Name:     in.User.GetName(),
 		Email:    in.User.GetEmail(),
-		Endereco: endereco,
+		Password: in.User.GetPassword(),
 	}
 
-	model.PostUser(user)
+	result := model.InsertUser(user)
 
 	return &pb.UserResponse{
-		Status: 201,
+		Token: result,
 	}, nil
 }
