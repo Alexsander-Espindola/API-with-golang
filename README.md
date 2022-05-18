@@ -2,6 +2,16 @@
 
 [Rodando a aplicação](#Rodando a aplicação)
 
+
+# Foco atual do projeto
+- 5 jogos competindo qual é o melhor
+- Os usuários do site vão votar de 0 a 10
+- O jogo com a maior nota no final vence
+
+# Próximos passos
+1. Criar uma função de voto
+2. Fazer o usuário conseguuir votar
+3. Se possível fazer a média dos votos ou apenas somar o número de votos
 # Rodando a aplicação
 
 ## Rodando com gRPC server
@@ -254,7 +264,7 @@ protoc --go_out=. --go-grpc_out=. proto/*.proto
 - IDL: Linguagem de definição de interface
 - Toda a comunicação do sistema definida no sistema do protobuf
 
-## Fontes que eu usei para o estudo
+# Fontes que eu usei para o estudo
 
 - Golang (A Linguagem do Futuro?) // Dicionário do Programador
 
@@ -339,4 +349,28 @@ https://www.youtube.com/watch?v=JP-D1In0juw&t=2085s&ab_channel=FullCycle
 
 ```
 https://www.youtube.com/watch?v=KC4Q2S2PACQ&ab_channel=krunalshimpi
+```
+
+- Grpc-microservice-example
+
+```
+https://github.com/MarioCarrion/grpc-microservice-example
+```
+
+- Building a gRPC Service in Golang: Unary RPC (Tutorial)
+
+```
+https://www.youtube.com/watch?v=GgR4JDVgPOc&ab_channel=MarioCarrion
+```
+
+- Building a gRPC Service in Golang: Server Streaming RPC (Tutorial)
+
+```
+https://www.youtube.com/watch?v=l_74x_qQZB8&ab_channel=MarioCarrion
+```
+
+- Building a gRPC Service in Golang: Client Streaming RPC (Tutorial)
+
+```
+https://www.youtube.com/watch?v=wKkaCxdfEh8&ab_channel=MarioCarrion
 ```

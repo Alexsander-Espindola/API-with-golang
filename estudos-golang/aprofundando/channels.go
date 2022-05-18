@@ -16,9 +16,9 @@ func ChannelSimples() {
 	fmt.Println(result)
 }
 
-//  Eu tentei almentar a complexidade do código nessa função
-// e é simplismente incrivel como o Go é rápido, eu posso
-// ter um código tão complexo quanto este a baixo e o tempo de
+//  Eu tentei aumentar a complexidade do código nessa função
+// e é simplesmente incrível como o Go é rápido, eu posso
+// ter um código tão complexo quanto este abaixo e o tempo de
 // processamento de 100000 repetições foi de 35 sec
 func ChannelComplexo() {
 	channel := make(chan int)
@@ -79,7 +79,7 @@ func VariosChannels() {
 }
 
 // func main() {
-// 	// ChannelSimples()
-// 	// ChannelComplexo()
+// 	ChannelSimples()
+// 	ChannelComplexo()
 // 	VariosChannels()
 // }
