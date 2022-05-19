@@ -2,7 +2,9 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"log"
+	"time"
 
 	"github.com/Alexsander-Espindola/API-with-golang/src/proto/pb"
 	"google.golang.org/grpc"
@@ -31,31 +33,45 @@ func main() {
 	// }
 	// log.Println(res)
 
-	reqVote := &pb.UserVoteRequest{
-		NameGame:      "Valorant",
-		TotalVotes:    20,
-		TotalSumVotes: 126,
+	fmt.Println("Abrindo um channel")
+	votation := make(chan int32)
+	fmt.Println("Chamando função ChannelForGame")
+	go ChannelForGame("Valorant", votation, client)
+	for i := 0; i < 10; i++ {
+		votation <- int32(i)
+		time.Sleep(time.Second)
 	}
 
-	resVote, err := client.UserVote(context.Background(), reqVote)
-	if err != nil {
-		log.Fatalf("Erro durante a requisição: %v", err)
-	}
-	log.Println(resVote)
+	// fmt.Println("chamando client.UserVote")
+	// resVote, err := client.UserVote(context.Background(), reqVote)
+	// if err != nil {
+	// 	log.Fatalf("Erro durante a requisição: %v", err)
+	// }
+	// log.Println(resVote)
 }
 
-// streamReq := &pb.StreamRequest{
-// 	StrRequest: "Olá Stream",
-// }
-// responseSteam, err := client.TestStream(context.Background(), streamReq)
-// if err != nil {
-// 	log.Fatal(err)
+// func UserVoteRand() {
+
 // }
 
-// for {
-// 	stream, err := responseSteam.Recv()
-// 	fmt.Printf("Stream: %v", stream.GetStrResponse())
-// 	if err != nil {
-// 		break
-// 	}
-// }
+func ChannelForGame(nameGame string, channelGame chan int32, client pb.PostUserClient) {
+	var totalVote int32
+	var totalSumVotes int32
+	totalVote = 0
+	totalSumVotes = 0
+	for x := range channelGame {
+		fmt.Println("Print do channelGame")
+		totalVote += 1
+		totalSumVotes += x
+		reqVote := &pb.UserVoteRequest{
+			NameGame:      nameGame,
+			TotalVotes:    totalVote,
+			TotalSumVotes: totalSumVotes,
+		}
+		resVote, err := client.UserVote(context.Background(), reqVote)
+		if err != nil {
+			log.Fatalf("Erro durante a requisição: %v", err)
+		}
+		log.Println(resVote)
+	}
+}

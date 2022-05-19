@@ -2,11 +2,15 @@ package servers
 
 import (
 	"context"
+	"fmt"
+	"math/rand"
 	"time"
 
 	"github.com/Alexsander-Espindola/API-with-golang/src/model"
 	"github.com/Alexsander-Espindola/API-with-golang/src/proto/pb"
 	"github.com/Alexsander-Espindola/API-with-golang/src/utils"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
 )
 
 type Server struct {
@@ -37,33 +41,36 @@ type votes struct {
 func (service *Server) UserVote(ctx context.Context, in *pb.UserVoteRequest) (*pb.UserVoteResponse, error) {
 
 	valorantVotes := votes{"Valorant", 0, 0}
-	csVotes := votes{"CS", 0, 0}
-	lolVotes := votes{"LOL", 0, 0}
-	dotaVotes := votes{"DOTA2", 0, 0}
-	eternalRetunrVotes := votes{"EternalReturn", 0, 0}
+	csVotes := votes{"CS", 1, 1}
+	lolVotes := votes{"LOL", 1, 1}
+	dotaVotes := votes{"DOTA2", 1, 1}
+	eternalRetunrVotes := votes{"EternalReturn", 1, 1}
 
 	gameName := in.GetNameGame()
+	totalSumVotes := in.GetTotalSumVotes()
+	totalVotes := in.GetTotalVotes()
+	fmt.Println(gameName, totalSumVotes, totalVotes)
 
 	switch {
 	case gameName == "Valorant":
-		valorantVotes.TotalVotes += 1
-		valorantVotes.TotalSumVotes += 4
+		valorantVotes.TotalSumVotes = totalSumVotes
+		valorantVotes.TotalVotes = totalVotes
 
 	case gameName == "CS":
-		csVotes.TotalVotes += 1
-		csVotes.TotalSumVotes += 4
+		csVotes.TotalSumVotes = totalSumVotes
+		csVotes.TotalVotes = totalVotes
 
 	case gameName == "LOL":
-		lolVotes.TotalVotes += 1
-		lolVotes.TotalSumVotes += 4
+		lolVotes.TotalSumVotes = totalSumVotes
+		lolVotes.TotalVotes = totalVotes
 
 	case gameName == "DOTA2":
-		dotaVotes.TotalVotes += 1
-		dotaVotes.TotalSumVotes += 4
+		dotaVotes.TotalSumVotes = totalSumVotes
+		dotaVotes.TotalVotes = totalVotes
 
 	case gameName == "EternalReturn":
-		eternalRetunrVotes.TotalVotes += 1
-		eternalRetunrVotes.TotalSumVotes += 4
+		eternalRetunrVotes.TotalSumVotes = totalSumVotes
+		eternalRetunrVotes.TotalVotes = totalVotes
 	}
 
 	voteRes := &pb.UserVoteResponse{
@@ -77,18 +84,22 @@ func (service *Server) UserVote(ctx context.Context, in *pb.UserVoteRequest) (*p
 	return voteRes, nil
 }
 
-type StreamStruct struct {
-}
+func (service *Server) TestStream(in *pb.StreamRequest, stream pb.PostUser_TestStreamServer) error {
 
-func (c *StreamStruct) TestStream(ctx context.Context, in *pb.StreamRequest, stream pb.PostUser_TestStreamServer) error {
-	message := in.GetStrRequest()
+	for {
+		select {
+		case <-stream.Context().Done():
+			return status.Error(codes.Canceled, "Encerrando Stream")
+		default:
+			time.Sleep(time.Minute)
+			value := 5 + rand.Intn(10)
 
-	for i := 0; i < 5; i++ {
-		res := &pb.StreamResponse{
-			StrResponse: message,
+			err := stream.SendMsg(&pb.StreamResponse{
+				StrResponse: string(rune(value)),
+			})
+			if err != nil {
+				return status.Error(codes.Canceled, "Encerrando Stream")
+			}
 		}
-		stream.Send(res)
-		time.Sleep(time.Second * 2)
 	}
-	return nil
 }
