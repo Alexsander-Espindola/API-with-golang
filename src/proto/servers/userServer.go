@@ -2,11 +2,14 @@ package servers
 
 import (
 	"context"
+	"fmt"
 	"time"
 
 	"github.com/Alexsander-Espindola/API-with-golang/src/model"
 	"github.com/Alexsander-Espindola/API-with-golang/src/proto/pb"
 	"github.com/Alexsander-Espindola/API-with-golang/src/utils"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
 )
 
 type Server struct {
@@ -28,18 +31,38 @@ func (service *Server) PostUser(ctx context.Context, in *pb.UserRequest) (*pb.Us
 	}, nil
 }
 
-type StreamStruct struct {
+func (service *Server) UserVote(ctx context.Context, in *pb.UserVoteRequest) (*pb.UserVoteResponse, error) {
+
+	voteRes := &pb.UserVoteResponse{
+		TotalVavaVotes:     in.GetTotalSumVavaVotes(),
+		TotalCsVote:        in.GetTotalSumCsVote(),
+		TotalLolzinhoVotes: in.GetTotalSumLolzinhoVotes(),
+		TotalDotinhaVotes:  in.GetTotalSumDotinhaVotes(),
+		TotalBestMobaVotes: in.GetTotalSumBestMobaVotes(),
+	}
+
+	return voteRes, nil
 }
 
-func (c *StreamStruct) TestStream(ctx context.Context, in *pb.StreamRequest, stream pb.PostUser_TestStreamServer) error {
-	message := in.GetStrRequest()
+func (service *Server) TestStream(in *pb.StreamRequest, stream pb.PostUser_TestStreamServer) error {
 
-	for i := 0; i < 5; i++ {
-		res := &pb.StreamResponse{
-			StrResponse: message,
+	for {
+		select {
+		case <-stream.Context().Done():
+			return status.Error(codes.Canceled, "Encerrando Stream")
+		default:
+			time.Sleep(time.Second)
+			fmt.Println("Entrou na stream")
+			err := stream.SendMsg(&pb.StreamResponse{
+				TotalVavaVotes:     in.GetTotalSumVavaVotes(),
+				TotalCsVote:        in.GetTotalSumCsVote(),
+				TotalLolzinhoVotes: in.GetTotalSumLolzinhoVotes(),
+				TotalDotinhaVotes:  in.GetTotalSumDotinhaVotes(),
+				TotalBestMobaVotes: in.GetTotalSumBestMobaVotes(),
+			})
+			if err != nil {
+				return status.Error(codes.Canceled, "Encerrando Stream")
+			}
 		}
-		stream.Send(res)
-		time.Sleep(time.Second * 2)
 	}
-	return nil
 }

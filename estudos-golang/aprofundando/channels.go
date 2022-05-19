@@ -74,12 +74,14 @@ func VariosChannels() {
 	go chamaChannel("6", mensagem)
 
 	for i := 0; i < 10; i++ {
+		fmt.Println(i)
 		mensagem <- i
+		time.Sleep(time.Second)
 	}
 }
 
 // func main() {
-// 	ChannelSimples()
-// 	ChannelComplexo()
+// 	// 	ChannelSimples()
+// 	// 	ChannelComplexo()
 // 	VariosChannels()
 // }

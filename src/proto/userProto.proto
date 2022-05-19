@@ -18,19 +18,35 @@ message UserResponse {
 }
 
 message StreamRequest {
-  string StrRequest = 1;
+  int32 TotalSumVavaVotes = 1;
+  int32 TotalSumCsVote = 2;
+  int32 TotalSumLolzinhoVotes = 3;
+  int32 TotalSumDotinhaVotes = 4;
+  int32 TotalSumBestMobaVotes = 5;
 }
 
 message StreamResponse {
-  string StrResponse = 1;
+  int32 TotalVavaVotes = 1;
+  int32 TotalCsVote = 2;
+  int32 TotalLolzinhoVotes = 3;
+  int32 TotalDotinhaVotes = 4;
+  int32 TotalBestMobaVotes = 5;
 }
 
 message UserVoteRequest {
-  int32 RequestVote = 1;
+  int32 TotalSumVavaVotes = 1;
+  int32 TotalSumCsVote = 2;
+  int32 TotalSumLolzinhoVotes = 3;
+  int32 TotalSumDotinhaVotes = 4;
+  int32 TotalSumBestMobaVotes = 5;
 }
 
 message UserVoteResponse {
-  int32 ResponseVote = 1;
+  int32 TotalVavaVotes = 1;
+  int32 TotalCsVote = 2;
+  int32 TotalLolzinhoVotes = 3;
+  int32 TotalDotinhaVotes = 4;
+  int32 TotalBestMobaVotes = 5;
 }
 
 service PostUser {
