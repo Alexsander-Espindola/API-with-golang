@@ -25,7 +25,16 @@ message StreamResponse {
   string StrResponse = 1;
 }
 
+message UserVoteRequest {
+  int32 RequestVote = 1;
+}
+
+message UserVoteResponse {
+  int32 ResponseVote = 1;
+}
+
 service PostUser {
   rpc PostUser (UserRequest) returns (UserResponse){};
+  rpc UserVote (UserVoteRequest) returns (UserVoteResponse){};
   rpc TestStream (StreamRequest) returns (stream StreamResponse){};
-} 
+}

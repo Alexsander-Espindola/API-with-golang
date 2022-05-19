@@ -23,6 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type PostUserClient interface {
 	PostUser(ctx context.Context, in *UserRequest, opts ...grpc.CallOption) (*UserResponse, error)
+	UserVote(ctx context.Context, in *UserVoteRequest, opts ...grpc.CallOption) (*UserVoteResponse, error)
 	TestStream(ctx context.Context, in *StreamRequest, opts ...grpc.CallOption) (PostUser_TestStreamClient, error)
 }
 
@@ -37,6 +38,15 @@ func NewPostUserClient(cc grpc.ClientConnInterface) PostUserClient {
 func (c *postUserClient) PostUser(ctx context.Context, in *UserRequest, opts ...grpc.CallOption) (*UserResponse, error) {
 	out := new(UserResponse)
 	err := c.cc.Invoke(ctx, "/protobuff.PostUser/PostUser", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *postUserClient) UserVote(ctx context.Context, in *UserVoteRequest, opts ...grpc.CallOption) (*UserVoteResponse, error) {
+	out := new(UserVoteResponse)
+	err := c.cc.Invoke(ctx, "/protobuff.PostUser/UserVote", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -80,6 +90,7 @@ func (x *postUserTestStreamClient) Recv() (*StreamResponse, error) {
 // for forward compatibility
 type PostUserServer interface {
 	PostUser(context.Context, *UserRequest) (*UserResponse, error)
+	UserVote(context.Context, *UserVoteRequest) (*UserVoteResponse, error)
 	TestStream(*StreamRequest, PostUser_TestStreamServer) error
 	mustEmbedUnimplementedPostUserServer()
 }
@@ -90,6 +101,9 @@ type UnimplementedPostUserServer struct {
 
 func (UnimplementedPostUserServer) PostUser(context.Context, *UserRequest) (*UserResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method PostUser not implemented")
+}
+func (UnimplementedPostUserServer) UserVote(context.Context, *UserVoteRequest) (*UserVoteResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UserVote not implemented")
 }
 func (UnimplementedPostUserServer) TestStream(*StreamRequest, PostUser_TestStreamServer) error {
 	return status.Errorf(codes.Unimplemented, "method TestStream not implemented")
@@ -125,6 +139,24 @@ func _PostUser_PostUser_Handler(srv interface{}, ctx context.Context, dec func(i
 	return interceptor(ctx, in, info, handler)
 }
 
+func _PostUser_UserVote_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UserVoteRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PostUserServer).UserVote(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/protobuff.PostUser/UserVote",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PostUserServer).UserVote(ctx, req.(*UserVoteRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _PostUser_TestStream_Handler(srv interface{}, stream grpc.ServerStream) error {
 	m := new(StreamRequest)
 	if err := stream.RecvMsg(m); err != nil {
@@ -156,6 +188,10 @@ var PostUser_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "PostUser",
 			Handler:    _PostUser_PostUser_Handler,
+		},
+		{
+			MethodName: "UserVote",
+			Handler:    _PostUser_UserVote_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{
