@@ -7,6 +7,7 @@ import (
 	"math/rand"
 	"time"
 
+	streamServer "github.com/Alexsander-Espindola/API-with-golang/src/proto/cmd/streamSever"
 	"github.com/Alexsander-Espindola/API-with-golang/src/proto/pb"
 	"google.golang.org/grpc"
 )
@@ -47,6 +48,18 @@ func main() {
 
 	for i := 0; i < 10; i++ {
 		gameRand := 1 + rand.Intn(5)
+		stream, err := client.TestStream(context.Background(), &pb.StreamRequest{
+			// TotalSumVavaVotes:     TotalSumVavaVotes,
+			// TotalSumCsVote:        TotalSumCsVote,
+			// TotalSumLolzinhoVotes: TotalSumLolzinhoVotes,
+			// TotalSumDotinhaVotes:  TotalSumDotinhaVotes,
+			// TotalSumBestMobaVotes: TotalSumBestMobaVotes,
+		})
+		streamServer.StreamClient(stream, client)
+
+		if err != nil {
+			log.Fatalf("Erro durante a requisição: %v", err)
+		}
 		channelGameVote <- gameRand
 		time.Sleep(time.Second)
 	}

@@ -1,4 +1,4 @@
-package main
+package streamServer
 
 import (
 	"context"
@@ -9,18 +9,9 @@ import (
 	"github.com/Alexsander-Espindola/API-with-golang/src/proto/pb"
 	ui "github.com/gizak/termui/v3"
 	"github.com/gizak/termui/v3/widgets"
-	"google.golang.org/grpc"
 )
 
-func main() {
-	conn, err := grpc.Dial("localhost:50051", grpc.WithInsecure())
-	if err != nil {
-		log.Fatalf("Erro na conexão com gRPC server: %v", err)
-	}
-
-	defer conn.Close()
-	client := pb.NewPostUserClient(conn)
-
+func StreamClient(stream pb.PostUser_TestStreamClient, client pb.PostUserClient) {
 	if err := ui.Init(); err != nil {
 		log.Fatalf("Couldn't init UI: %v", err)
 	}
@@ -62,5 +53,4 @@ func main() {
 			break
 		}
 	}
-
 }
