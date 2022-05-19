@@ -2,6 +2,7 @@ package servers
 
 import (
 	"context"
+	"fmt"
 	"math/rand"
 	"time"
 
@@ -51,11 +52,11 @@ func (service *Server) TestStream(in *pb.StreamRequest, stream pb.PostUser_TestS
 		case <-stream.Context().Done():
 			return status.Error(codes.Canceled, "Encerrando Stream")
 		default:
-			time.Sleep(time.Minute)
-			value := 5 + rand.Intn(10)
+			time.Sleep(time.Second)
+			value := 1 + rand.Intn(5)
 
 			err := stream.SendMsg(&pb.StreamResponse{
-				StrResponse: string(rune(value)),
+				StrResponse: fmt.Sprint(value),
 			})
 			if err != nil {
 				return status.Error(codes.Canceled, "Encerrando Stream")
