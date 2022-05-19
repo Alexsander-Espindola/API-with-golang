@@ -28,6 +28,15 @@ func (service *Server) PostUser(ctx context.Context, in *pb.UserRequest) (*pb.Us
 	}, nil
 }
 
+func (service *Server) UserVote(ctx context.Context, in *pb.UserVoteRequest) (*pb.UserVoteResponse, error) {
+
+	voteRes := &pb.UserVoteResponse{
+		ResponseVote: in.GetRequestVote(),
+	}
+
+	return voteRes, nil
+}
+
 type StreamStruct struct {
 }
 

@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"fmt"
 	"log"
 
 	"github.com/Alexsander-Espindola/API-with-golang/src/proto/pb"
@@ -18,34 +17,44 @@ func main() {
 	defer conn.Close()
 	client := pb.NewPostUserClient(conn)
 
-	req := &pb.UserRequest{
-		User: &pb.User{
-			Name:     "Alexs",
-			Email:    "Alexs@gmail.com",
-			Password: "1234567",
-		},
+	// req := &pb.UserRequest{
+	// 	User: &pb.User{
+	// 		Name:     "Alexs",
+	// 		Email:    "Alexs@gmail.com",
+	// 		Password: "1234567",
+	// 	},
+	// }
+
+	// res, err := client.PostUser(context.Background(), req)
+	// if err != nil {
+	// 	log.Fatalf("Erro durante a requisição: %v", err)
+	// }
+	// log.Println(res)
+
+	reqVote := &pb.UserVoteRequest{
+		RequestVote: 10,
 	}
 
-	res, err := client.PostUser(context.Background(), req)
+	resVote, err := client.UserVote(context.Background(), reqVote)
 	if err != nil {
 		log.Fatalf("Erro durante a requisição: %v", err)
 	}
-	log.Println(res)
+	log.Println(resVote)
 
-	streamReq := &pb.StreamRequest{
-		StrRequest: "Olá Stream",
-	}
-
-	responseSteam, err := client.TestStream(context.Background(), streamReq)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	for {
-		stream, err := responseSteam.Recv()
-		fmt.Printf("Stream: %v", stream.GetStrResponse())
-		if err != nil {
-			break
-		}
-	}
 }
+
+// streamReq := &pb.StreamRequest{
+// 	StrRequest: "Olá Stream",
+// }
+// responseSteam, err := client.TestStream(context.Background(), streamReq)
+// if err != nil {
+// 	log.Fatal(err)
+// }
+
+// for {
+// 	stream, err := responseSteam.Recv()
+// 	fmt.Printf("Stream: %v", stream.GetStrResponse())
+// 	if err != nil {
+// 		break
+// 	}
+// }
