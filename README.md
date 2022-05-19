@@ -5,12 +5,12 @@
 
 # Foco atual do projeto
 - 5 jogos competindo qual é o melhor
-- Os usuários do site vão votar de 0 a 10
+- Os usuários do site vão votar e cada voto soma 1 ponto
 - O jogo com a maior nota no final vence
 
 # Próximos passos
 1. Criar uma função de voto
-2. Fazer o usuário conseguuir votar
+2. Fazer o usuário conseguir votar
 3. Se possível fazer a média dos votos ou apenas somar o número de votos
 # Rodando a aplicação
 
@@ -20,7 +20,7 @@
 
 ```
 docker run --name mongodb-golang -d -p 27017:27017 mongo
-```
+```de 0 a 10
 
 - Se já tver rodado o comando acima antes rode:
 
