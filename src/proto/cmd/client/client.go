@@ -42,7 +42,6 @@ func main() {
 		log.Fatalf("Erro durante a requisição: %v", err)
 	}
 	log.Println(resVote)
-
 }
 
 // streamReq := &pb.StreamRequest{

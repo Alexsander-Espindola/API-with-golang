@@ -31,7 +31,7 @@ func (service *Server) PostUser(ctx context.Context, in *pb.UserRequest) (*pb.Us
 type votes struct {
 	NameGame      string
 	TotalVotes    int32
-	TotalSumVotes int64
+	TotalSumVotes int32
 }
 
 func (service *Server) UserVote(ctx context.Context, in *pb.UserVoteRequest) (*pb.UserVoteResponse, error) {
@@ -67,7 +67,11 @@ func (service *Server) UserVote(ctx context.Context, in *pb.UserVoteRequest) (*p
 	}
 
 	voteRes := &pb.UserVoteResponse{
-		ResponseVote: in.GetTotalVotes(),
+		TotalVavaVotes:     valorantVotes.TotalSumVotes / valorantVotes.TotalVotes,
+		TotalCsVote:        csVotes.TotalSumVotes / csVotes.TotalVotes,
+		TotalLolzinhoVotes: lolVotes.TotalSumVotes / lolVotes.TotalVotes,
+		TotalDotinhaVotes:  dotaVotes.TotalSumVotes / dotaVotes.TotalVotes,
+		TotalBestMobaVotes: eternalRetunrVotes.TotalSumVotes / eternalRetunrVotes.TotalVotes,
 	}
 
 	return voteRes, nil

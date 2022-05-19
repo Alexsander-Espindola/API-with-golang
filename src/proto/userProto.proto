@@ -28,11 +28,15 @@ message StreamResponse {
 message UserVoteRequest {
   string NameGame = 1;
   int32 TotalVotes = 2;
-  int64 TotalSumVotes = 3;
+  int32 TotalSumVotes = 3;
 }
 
 message UserVoteResponse {
-  int32 ResponseVote = 1;
+  int32 TotalVavaVotes = 1;
+  int32 TotalCsVote = 2;
+  int32 TotalLolzinhoVotes = 3;
+  int32 TotalDotinhaVotes = 4;
+  int32 TotalBestMobaVotes = 5;
 }
 
 service PostUser {
