@@ -40,7 +40,7 @@ type votes struct {
 
 func (service *Server) UserVote(ctx context.Context, in *pb.UserVoteRequest) (*pb.UserVoteResponse, error) {
 
-	valorantVotes := votes{"Valorant", 0, 0}
+	valorantVotes := votes{"Valorant", 1, 1}
 	csVotes := votes{"CS", 1, 1}
 	lolVotes := votes{"LOL", 1, 1}
 	dotaVotes := votes{"DOTA2", 1, 1}
@@ -53,24 +53,29 @@ func (service *Server) UserVote(ctx context.Context, in *pb.UserVoteRequest) (*p
 
 	switch {
 	case gameName == "Valorant":
-		valorantVotes.TotalSumVotes = totalSumVotes
-		valorantVotes.TotalVotes = totalVotes
+		fmt.Println("Channel Valorant")
+		valorantVotes.TotalSumVotes += totalSumVotes
+		valorantVotes.TotalVotes += totalVotes
 
 	case gameName == "CS":
-		csVotes.TotalSumVotes = totalSumVotes
-		csVotes.TotalVotes = totalVotes
+		fmt.Println("Channel CS")
+		csVotes.TotalSumVotes += totalSumVotes
+		csVotes.TotalVotes += totalVotes
 
 	case gameName == "LOL":
-		lolVotes.TotalSumVotes = totalSumVotes
-		lolVotes.TotalVotes = totalVotes
+		fmt.Println("Channel LOL")
+		lolVotes.TotalSumVotes += totalSumVotes
+		lolVotes.TotalVotes += totalVotes
 
 	case gameName == "DOTA2":
-		dotaVotes.TotalSumVotes = totalSumVotes
-		dotaVotes.TotalVotes = totalVotes
+		fmt.Println("Channel DOTA2")
+		dotaVotes.TotalSumVotes += totalSumVotes
+		dotaVotes.TotalVotes += totalVotes
 
 	case gameName == "EternalReturn":
-		eternalRetunrVotes.TotalSumVotes = totalSumVotes
-		eternalRetunrVotes.TotalVotes = totalVotes
+		fmt.Println("Channel Etrn")
+		eternalRetunrVotes.TotalSumVotes += totalSumVotes
+		eternalRetunrVotes.TotalVotes += totalVotes
 	}
 
 	voteRes := &pb.UserVoteResponse{
