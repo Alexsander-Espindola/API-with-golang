@@ -26,7 +26,9 @@ message StreamResponse {
 }
 
 message UserVoteRequest {
-  int32 RequestVote = 1;
+  string NameGame = 1;
+  int32 TotalVotes = 2;
+  int64 TotalSumVotes = 3;
 }
 
 message UserVoteResponse {

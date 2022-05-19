@@ -32,7 +32,9 @@ func main() {
 	// log.Println(res)
 
 	reqVote := &pb.UserVoteRequest{
-		RequestVote: 10,
+		NameGame:      "Valorant",
+		TotalVotes:    20,
+		TotalSumVotes: 126,
 	}
 
 	resVote, err := client.UserVote(context.Background(), reqVote)
