@@ -3,12 +3,14 @@ package main
 import (
 	"context"
 	"fmt"
+	"io"
 	"log"
 	"math/rand"
 	"time"
 
-	streamServer "github.com/Alexsander-Espindola/API-with-golang/src/proto/cmd/streamSever"
 	"github.com/Alexsander-Espindola/API-with-golang/src/proto/pb"
+	ui "github.com/gizak/termui/v3"
+	"github.com/gizak/termui/v3/widgets"
 	"google.golang.org/grpc"
 )
 
@@ -27,92 +29,105 @@ func main() {
 	defer conn.Close()
 	client := pb.NewPostUserClient(conn)
 
-	// req := &pb.UserRequest{
-	// 	User: &pb.User{
-	// 		Name:     "Alexs",
-	// 		Email:    "Alexs@gmail.com",
-	// 		Password: "1234567",
-	// 	},
-	// }
+	if err := ui.Init(); err != nil {
+		log.Fatalf("Couldn't init UI: %v", err)
+	}
+	defer ui.Close()
 
-	// res, err := client.PostUser(context.Background(), req)
-	// if err != nil {
-	// 	log.Fatalf("Erro durante a requisição: %v", err)
-	// }
-	// log.Println(res)
+	lc := widgets.NewPlot()
+	ui.Render(lc)
 
-	fmt.Println("Abrindo um channel")
 	channelGameVote := make(chan int)
-	fmt.Println("Chamando função ChannelForGame")
+
 	go ChannelForGame(channelGameVote, client)
+	var stream pb.PostUser_TestStreamClient
 
-	stream, err := client.TestStream(context.Background(), &pb.StreamRequest{
-		TotalSumVavaVotes:     TotalSumVavaVotes,
-		TotalSumCsVote:        TotalSumCsVote,
-		TotalSumLolzinhoVotes: TotalSumLolzinhoVotes,
-		TotalSumDotinhaVotes:  TotalSumDotinhaVotes,
-		TotalSumBestMobaVotes: TotalSumBestMobaVotes,
-	})
-	streamServer.StreamClient(stream, client)
-
-	for i := 0; i < 10; i++ {
+	for i := 0; i < 100; i++ {
+		stream, err = client.TestStream(context.Background(), &pb.StreamRequest{
+			TotalSumVavaVotes:     TotalSumVavaVotes,
+			TotalSumCsVote:        TotalSumCsVote,
+			TotalSumLolzinhoVotes: TotalSumLolzinhoVotes,
+			TotalSumDotinhaVotes:  TotalSumDotinhaVotes,
+			TotalSumBestMobaVotes: TotalSumBestMobaVotes,
+		})
+		if err != nil {
+			log.Fatalf("Erro na requisição da stream: %v", err)
+		}
 		gameRand1 := 1 + rand.Intn(5)
-		gameRand2 := 1 + rand.Intn(5)
-		gameRand3 := 1 + rand.Intn(5)
-		gameRand4 := 1 + rand.Intn(5)
+
+		value, err := stream.Recv()
+		fmt.Println("Valorant:", value.TotalVavaVotes)
+		fmt.Println("CS", value.TotalCsVote)
+		fmt.Println("LOL", value.TotalLolzinhoVotes)
+		fmt.Println("DOTA2", value.TotalDotinhaVotes)
+		fmt.Println("EternalReturn", value.TotalBestMobaVotes)
+		if err == io.EOF {
+			return
+		}
+		if err != nil {
+			log.Fatal(err)
+		}
+		ui.Render()
 
 		if err != nil {
 			log.Fatalf("Erro durante a requisição: %v", err)
 		}
 		channelGameVote <- gameRand1
-		channelGameVote <- gameRand2
-		channelGameVote <- gameRand3
-		channelGameVote <- gameRand4
 		time.Sleep(time.Second)
 	}
-	reqVote := &pb.UserVoteRequest{
-		TotalSumVavaVotes:     TotalSumVavaVotes,
-		TotalSumCsVote:        TotalSumCsVote,
-		TotalSumLolzinhoVotes: TotalSumLolzinhoVotes,
-		TotalSumDotinhaVotes:  TotalSumDotinhaVotes,
-		TotalSumBestMobaVotes: TotalSumBestMobaVotes,
-	}
 
-	fmt.Println("chamando client.UserVote")
-	resVote, err := client.UserVote(context.Background(), reqVote)
-	if err != nil {
-		log.Fatalf("Erro durante a requisição: %v", err)
+	uiEvents := ui.PollEvents()
+
+	for {
+		fmt.Println("Context done")
+		select {
+		case e := <-uiEvents: // Listen for Keyboard
+			switch e.ID {
+			case "q", "<C-c>":
+				return
+			}
+		case <-stream.Context().Done():
+			fmt.Println("All done")
+			reqVote := &pb.UserVoteRequest{
+				TotalSumVavaVotes:     TotalSumVavaVotes,
+				TotalSumCsVote:        TotalSumCsVote,
+				TotalSumLolzinhoVotes: TotalSumLolzinhoVotes,
+				TotalSumDotinhaVotes:  TotalSumDotinhaVotes,
+				TotalSumBestMobaVotes: TotalSumBestMobaVotes,
+			}
+
+			fmt.Println("chamando client.UserVote")
+			resVote, err := client.UserVote(context.Background(), reqVote)
+			if err != nil {
+				log.Fatalf("Erro durante a requisição: %v", err)
+			}
+			log.Println(resVote)
+			break
+		}
 	}
-	log.Println(resVote)
 }
 
 func UserVoteRand(idGame int, client pb.PostUserClient) {
 	switch {
 	case idGame == 1:
-		fmt.Println("Channel Valorant")
 		TotalSumVavaVotes += 1
 
 	case idGame == 2:
-		fmt.Println("Channel CS")
 		TotalSumCsVote += 1
 
 	case idGame == 3:
-		fmt.Println("Channel LOL")
 		TotalSumLolzinhoVotes += 1
 
 	case idGame == 4:
-		fmt.Println("Channel DOTA2")
 		TotalSumDotinhaVotes += 1
 
 	case idGame == 5:
-		fmt.Println("Channel Etrn")
 		TotalSumBestMobaVotes += 1
 	}
 }
 
 func ChannelForGame(channelGame chan int, client pb.PostUserClient) {
 	for idGame := range channelGame {
-		fmt.Println("Print do channelGame")
 		UserVoteRand(idGame, client)
 	}
 }
