@@ -26,9 +26,11 @@ message StreamResponse {
 }
 
 message UserVoteRequest {
-  string NameGame = 1;
-  int32 TotalVotes = 2;
-  int32 TotalSumVotes = 3;
+  int32 TotalSumVavaVotes = 1;
+  int32 TotalSumCsVote = 2;
+  int32 TotalSumLolzinhoVotes = 3;
+  int32 TotalSumDotinhaVotes = 4;
+  int32 TotalSumBestMobaVotes = 5;
 }
 
 message UserVoteResponse {

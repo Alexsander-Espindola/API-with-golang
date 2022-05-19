@@ -2,7 +2,6 @@ package servers
 
 import (
 	"context"
-	"fmt"
 	"math/rand"
 	"time"
 
@@ -32,58 +31,14 @@ func (service *Server) PostUser(ctx context.Context, in *pb.UserRequest) (*pb.Us
 	}, nil
 }
 
-type votes struct {
-	NameGame      string
-	TotalVotes    int32
-	TotalSumVotes int32
-}
-
 func (service *Server) UserVote(ctx context.Context, in *pb.UserVoteRequest) (*pb.UserVoteResponse, error) {
 
-	valorantVotes := votes{"Valorant", 1, 1}
-	csVotes := votes{"CS", 1, 1}
-	lolVotes := votes{"LOL", 1, 1}
-	dotaVotes := votes{"DOTA2", 1, 1}
-	eternalRetunrVotes := votes{"EternalReturn", 1, 1}
-
-	gameName := in.GetNameGame()
-	totalSumVotes := in.GetTotalSumVotes()
-	totalVotes := in.GetTotalVotes()
-	fmt.Println(gameName, totalSumVotes, totalVotes)
-
-	switch {
-	case gameName == "Valorant":
-		fmt.Println("Channel Valorant")
-		valorantVotes.TotalSumVotes += totalSumVotes
-		valorantVotes.TotalVotes += totalVotes
-
-	case gameName == "CS":
-		fmt.Println("Channel CS")
-		csVotes.TotalSumVotes += totalSumVotes
-		csVotes.TotalVotes += totalVotes
-
-	case gameName == "LOL":
-		fmt.Println("Channel LOL")
-		lolVotes.TotalSumVotes += totalSumVotes
-		lolVotes.TotalVotes += totalVotes
-
-	case gameName == "DOTA2":
-		fmt.Println("Channel DOTA2")
-		dotaVotes.TotalSumVotes += totalSumVotes
-		dotaVotes.TotalVotes += totalVotes
-
-	case gameName == "EternalReturn":
-		fmt.Println("Channel Etrn")
-		eternalRetunrVotes.TotalSumVotes += totalSumVotes
-		eternalRetunrVotes.TotalVotes += totalVotes
-	}
-
 	voteRes := &pb.UserVoteResponse{
-		TotalVavaVotes:     valorantVotes.TotalSumVotes / valorantVotes.TotalVotes,
-		TotalCsVote:        csVotes.TotalSumVotes / csVotes.TotalVotes,
-		TotalLolzinhoVotes: lolVotes.TotalSumVotes / lolVotes.TotalVotes,
-		TotalDotinhaVotes:  dotaVotes.TotalSumVotes / dotaVotes.TotalVotes,
-		TotalBestMobaVotes: eternalRetunrVotes.TotalSumVotes / eternalRetunrVotes.TotalVotes,
+		TotalVavaVotes:     in.GetTotalSumVavaVotes(),
+		TotalCsVote:        in.GetTotalSumCsVote(),
+		TotalLolzinhoVotes: in.GetTotalSumLolzinhoVotes(),
+		TotalDotinhaVotes:  in.GetTotalSumDotinhaVotes(),
+		TotalBestMobaVotes: in.GetTotalSumBestMobaVotes(),
 	}
 
 	return voteRes, nil

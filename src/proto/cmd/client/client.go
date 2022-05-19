@@ -11,6 +11,12 @@ import (
 	"google.golang.org/grpc"
 )
 
+var TotalSumVavaVotes int32
+var TotalSumCsVote int32
+var TotalSumLolzinhoVotes int32
+var TotalSumDotinhaVotes int32
+var TotalSumBestMobaVotes int32
+
 func main() {
 	conn, err := grpc.Dial("localhost:50051", grpc.WithInsecure())
 	if err != nil {
@@ -35,74 +41,58 @@ func main() {
 	// log.Println(res)
 
 	fmt.Println("Abrindo um channel")
+	channelGameVote := make(chan int)
 	fmt.Println("Chamando função ChannelForGame")
+	go ChannelForGame(channelGameVote, client)
+
 	for i := 0; i < 10; i++ {
-		UserVoteRand(client)
+		gameRand := 1 + rand.Intn(5)
+		channelGameVote <- gameRand
 		time.Sleep(time.Second)
 	}
+	reqVote := &pb.UserVoteRequest{
+		TotalSumVavaVotes:     TotalSumVavaVotes,
+		TotalSumCsVote:        TotalSumCsVote,
+		TotalSumLolzinhoVotes: TotalSumLolzinhoVotes,
+		TotalSumDotinhaVotes:  TotalSumDotinhaVotes,
+		TotalSumBestMobaVotes: TotalSumBestMobaVotes,
+	}
 
-	// fmt.Println("chamando client.UserVote")
-	// resVote, err := client.UserVote(context.Background(), reqVote)
-	// if err != nil {
-	// 	log.Fatalf("Erro durante a requisição: %v", err)
-	// }
-	// log.Println(resVote)
+	fmt.Println("chamando client.UserVote")
+	resVote, err := client.UserVote(context.Background(), reqVote)
+	if err != nil {
+		log.Fatalf("Erro durante a requisição: %v", err)
+	}
+	log.Println(resVote)
 }
 
-func UserVoteRand(client pb.PostUserClient) {
-	gameRand := 1 + rand.Intn(5)
-	value := 5 + rand.Intn(10)
-	vavaVote := make(chan int)
-	csVote := make(chan int)
-	lolVote := make(chan int)
-	dotaVote := make(chan int)
-	etrnVote := make(chan int)
+func UserVoteRand(idGame int, client pb.PostUserClient) {
 	switch {
-	case gameRand == 1:
-		fmt.Println("Abrindo um channel Vava")
-		go ChannelForGame("Valorant", vavaVote, client)
-		vavaVote <- value
+	case idGame == 1:
+		fmt.Println("Channel Valorant")
+		TotalSumVavaVotes += 1
 
-	case gameRand == 2:
-		fmt.Println("Abrindo um channel CS")
-		go ChannelForGame("CS", csVote, client)
-		csVote <- value
+	case idGame == 2:
+		fmt.Println("Channel CS")
+		TotalSumCsVote += 1
 
-	case gameRand == 3:
-		fmt.Println("Abrindo um channel LOL")
-		go ChannelForGame("LOL", lolVote, client)
-		lolVote <- value
+	case idGame == 3:
+		fmt.Println("Channel LOL")
+		TotalSumLolzinhoVotes += 1
 
-	case gameRand == 4:
-		fmt.Println("Abrindo um channel DOTA2")
-		go ChannelForGame("DOTA2", dotaVote, client)
-		dotaVote <- value
+	case idGame == 4:
+		fmt.Println("Channel DOTA2")
+		TotalSumDotinhaVotes += 1
 
-	case gameRand == 5:
-		fmt.Println("Abrindo um channel Etrn")
-		go ChannelForGame("EternalReturn", etrnVote, client)
-		etrnVote <- value
+	case idGame == 5:
+		fmt.Println("Channel Etrn")
+		TotalSumBestMobaVotes += 1
 	}
 }
 
-func ChannelForGame(nameGame string, channelGame chan int, client pb.PostUserClient) {
-	var totalVote int32
-	var totalSumVotes int32
-	totalVote = 0
-	totalSumVotes = 0
-	for x := range channelGame {
+func ChannelForGame(channelGame chan int, client pb.PostUserClient) {
+	for idGame := range channelGame {
 		fmt.Println("Print do channelGame")
-		totalVote += 1
-		totalSumVotes += int32(x)
-		reqVote := &pb.UserVoteRequest{
-			NameGame:      nameGame,
-			TotalVotes:    totalVote,
-			TotalSumVotes: totalSumVotes,
-		}
-		resVote, err := client.UserVote(context.Background(), reqVote)
-		if err != nil {
-			log.Fatalf("Erro durante a requisição: %v", err)
-		}
-		log.Println(resVote)
+		UserVoteRand(idGame, client)
 	}
 }
