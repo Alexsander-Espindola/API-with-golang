@@ -46,21 +46,28 @@ func main() {
 	fmt.Println("Chamando função ChannelForGame")
 	go ChannelForGame(channelGameVote, client)
 
+	stream, err := client.TestStream(context.Background(), &pb.StreamRequest{
+		TotalSumVavaVotes:     TotalSumVavaVotes,
+		TotalSumCsVote:        TotalSumCsVote,
+		TotalSumLolzinhoVotes: TotalSumLolzinhoVotes,
+		TotalSumDotinhaVotes:  TotalSumDotinhaVotes,
+		TotalSumBestMobaVotes: TotalSumBestMobaVotes,
+	})
+	streamServer.StreamClient(stream, client)
+
 	for i := 0; i < 10; i++ {
-		gameRand := 1 + rand.Intn(5)
-		stream, err := client.TestStream(context.Background(), &pb.StreamRequest{
-			// TotalSumVavaVotes:     TotalSumVavaVotes,
-			// TotalSumCsVote:        TotalSumCsVote,
-			// TotalSumLolzinhoVotes: TotalSumLolzinhoVotes,
-			// TotalSumDotinhaVotes:  TotalSumDotinhaVotes,
-			// TotalSumBestMobaVotes: TotalSumBestMobaVotes,
-		})
-		streamServer.StreamClient(stream, client)
+		gameRand1 := 1 + rand.Intn(5)
+		gameRand2 := 1 + rand.Intn(5)
+		gameRand3 := 1 + rand.Intn(5)
+		gameRand4 := 1 + rand.Intn(5)
 
 		if err != nil {
 			log.Fatalf("Erro durante a requisição: %v", err)
 		}
-		channelGameVote <- gameRand
+		channelGameVote <- gameRand1
+		channelGameVote <- gameRand2
+		channelGameVote <- gameRand3
+		channelGameVote <- gameRand4
 		time.Sleep(time.Second)
 	}
 	reqVote := &pb.UserVoteRequest{

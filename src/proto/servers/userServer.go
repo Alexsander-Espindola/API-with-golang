@@ -3,7 +3,6 @@ package servers
 import (
 	"context"
 	"fmt"
-	"math/rand"
 	"time"
 
 	"github.com/Alexsander-Espindola/API-with-golang/src/model"
@@ -53,10 +52,13 @@ func (service *Server) TestStream(in *pb.StreamRequest, stream pb.PostUser_TestS
 			return status.Error(codes.Canceled, "Encerrando Stream")
 		default:
 			time.Sleep(time.Second)
-			value := 1 + rand.Intn(5)
-
+			fmt.Println("Entrou na stream")
 			err := stream.SendMsg(&pb.StreamResponse{
-				StrResponse: fmt.Sprint(value),
+				TotalVavaVotes:     in.GetTotalSumVavaVotes(),
+				TotalCsVote:        in.GetTotalSumCsVote(),
+				TotalLolzinhoVotes: in.GetTotalSumLolzinhoVotes(),
+				TotalDotinhaVotes:  in.GetTotalSumDotinhaVotes(),
+				TotalBestMobaVotes: in.GetTotalSumBestMobaVotes(),
 			})
 			if err != nil {
 				return status.Error(codes.Canceled, "Encerrando Stream")
