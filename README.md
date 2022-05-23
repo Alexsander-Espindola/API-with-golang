@@ -20,7 +20,7 @@
 
 ```
 docker run --name mongodb-golang -d -p 27017:27017 mongo
-```de 0 a 10
+```
 
 - Se já tver rodado o comando acima antes rode:
 
